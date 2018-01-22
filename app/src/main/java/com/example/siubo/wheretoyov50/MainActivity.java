@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected LocationRequest mLocationRequest;
     protected LocationCallback mLocationCallback;
     protected DatabaseReference ref;
-    protected double home_lat, home_lng;
+    protected double home_lat, home_lng, ori_lat, ori_lng;
     protected int first_stayed, stayed;
 
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         gender = 2;
         home_lat = 0.0;
         home_lng = 0.0;
-        first_stayed = 25;
+        first_stayed = 1500;
 
 
         ref = FirebaseDatabase.getInstance().getReference("data");
@@ -81,30 +81,27 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("MAIN", "Near Home.");
                         return;
                     }
-                    if (first_stayed == 25){
-                        first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-                        Log.d("MAIN", "Location Update Init.");
-                        return;
-                    }
-                    stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) - first_stayed;
-                    if (stayed == 0) {
-                        Log.d("MAIN", "Stayed Less than an hour.");
-                        return;
-                    }
+                    stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE) - first_stayed;
                     if (stayed < 0)
-                        stayed += 24;
-                    DatabaseItem additem = new DatabaseItem(iamgender, location.getLatitude(), location.getLongitude(),
-                            Integer.toString(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)), Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
-                    String key = ref.push().getKey();
-                    ref.child(key).setValue(additem);
-                    Log.d("MAIN", "Added Item to Database.");
-                    Log.d("MAIN", "Key: " + key);
-                    Log.d("MAIN", "iamgender: " + Integer.toString(iamgender));
-                    Log.d("MAIN", "Lat: " + Double.toString(location.getLatitude()));
-                    Log.d("MAIN", "Lng: " + Double.toString(location.getLongitude()));
-                    Log.d("MAIN", "Hour: " + Integer.toString(stayed));
-                    Log.d("MAIN", "Lastseen: " + Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
-                    first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                        stayed += 1440;
+                    if (stayed > 30 && first_stayed != 1500) {
+                        DatabaseItem additem = new DatabaseItem(iamgender, ori_lat, ori_lng,
+                                Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
+                                Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+                        String key = ref.push().getKey();
+                        ref.child(key).setValue(additem);
+                        Log.d("MAIN", "Added Item to Database.");
+                        Log.d("MAIN", "Key: " + key);
+                        Log.d("MAIN", "iamgender: " + Integer.toString(iamgender));
+                        Log.d("MAIN", "Lat: " + Double.toString(ori_lat));
+                        Log.d("MAIN", "Lng: " + Double.toString(ori_lng));
+                        Log.d("MAIN", "Stayed: " + Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60));
+                        Log.d("MAIN", "Lastseen: " + Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+                    }
+                    ori_lat = location.getLatitude();
+                    ori_lng = location.getLongitude();
+                    first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
+
                 }
             }
         };
@@ -166,11 +163,13 @@ public class MainActivity extends AppCompatActivity {
         mLocationRequest.setSmallestDisplacement(0);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
         */
+        ///*
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1200000);
         mLocationRequest.setFastestInterval(1200000);
         mLocationRequest.setSmallestDisplacement(100);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        //*/
 
     }
 

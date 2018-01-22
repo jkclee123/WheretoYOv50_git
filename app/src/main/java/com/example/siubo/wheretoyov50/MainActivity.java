@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected LocationRequest mLocationRequest;
     protected LocationCallback mLocationCallback;
     protected DatabaseReference ref;
-    protected double home_lat, home_lng, ori_lat, ori_lng;
+    protected double home_lat, home_lng;
     protected int first_stayed, stayed;
 
 
@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
         gender = 2;
         home_lat = 0.0;
         home_lng = 0.0;
-        ori_lat = 0.0;
-        ori_lng = 0.0;
         first_stayed = 25;
 
 
@@ -172,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         mLocationRequest.setInterval(1200000);
         mLocationRequest.setFastestInterval(1200000);
         mLocationRequest.setSmallestDisplacement(100);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
     }
 

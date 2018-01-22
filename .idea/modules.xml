@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WheretoYOv50.iml" filepath="$PROJECT_DIR$/WheretoYOv50.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WheretoYOv50_git.iml" filepath="$PROJECT_DIR$/WheretoYOv50_git.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

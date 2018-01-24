@@ -24,6 +24,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -81,27 +82,48 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("MAIN", "Near Home.");
                         return;
                     }
+
+                    if (first_stayed == 1500){
+                        ori_lat = location.getLatitude();
+                        ori_lng = location.getLongitude();
+                        first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
+                        Log.d("MAIN", "Location Update Init.");
+                        return;
+                    }
+
+                    if (dist(ori_lat, ori_lng, location.getLatitude(), location.getLongitude()) < 100){
+                        Log.d("MAIN", "Still Within 100 Meters Range.");
+                        return;
+                    }
+
                     stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE) - first_stayed;
                     if (stayed < 0)
                         stayed += 1440;
-                    if (stayed > 30 && first_stayed != 1500) {
-                        DatabaseItem additem = new DatabaseItem(iamgender, ori_lat, ori_lng,
-                                Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
-                                Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
-                        String key = ref.push().getKey();
-                        ref.child(key).setValue(additem);
-                        Log.d("MAIN", "Added Item to Database.");
-                        Log.d("MAIN", "Key: " + key);
-                        Log.d("MAIN", "iamgender: " + Integer.toString(iamgender));
-                        Log.d("MAIN", "Lat: " + Double.toString(ori_lat));
-                        Log.d("MAIN", "Lng: " + Double.toString(ori_lng));
-                        Log.d("MAIN", "Stayed: " + Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60));
-                        Log.d("MAIN", "Lastseen: " + Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+
+                    if (stayed < 30){
+                        ori_lat = location.getLatitude();
+                        ori_lng = location.getLongitude();
+                        first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
+                        Log.d("MAIN", "Stayed Less Than 30 Mins.");
+                        return;
                     }
+
+                    DatabaseItem additem = new DatabaseItem(iamgender, ori_lat, ori_lng,
+                            Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
+                            Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+                    String key = ref.push().getKey();
+                    ref.child(key).setValue(additem);
+                    Log.d("MAIN", "Added Item to Database.");
+                    Log.d("MAIN", "Key: " + key);
+                    Log.d("MAIN", "iamgender: " + Integer.toString(iamgender));
+                    Log.d("MAIN", "Lat: " + Double.toString(ori_lat));
+                    Log.d("MAIN", "Lng: " + Double.toString(ori_lng));
+                    Log.d("MAIN", "Stayed: " + Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60));
+                    Log.d("MAIN", "Lastseen: " + Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
                     ori_lat = location.getLatitude();
                     ori_lng = location.getLongitude();
                     first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
-
+                    Log.d("MAIN", "Reinit Location Update.");
                 }
             }
         };
@@ -153,6 +175,22 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        switch(gender){
+            case 0:
+                ((CheckBox) findViewById(R.id.male_checkBox)).setChecked(false);
+                ((CheckBox) findViewById(R.id.female_checkBox)).setChecked(true);
+                break;
+            case 1:
+                ((CheckBox) findViewById(R.id.male_checkBox)).setChecked(true);
+                ((CheckBox) findViewById(R.id.female_checkBox)).setChecked(false);
+                break;
+            case 2:
+                ((CheckBox) findViewById(R.id.male_checkBox)).setChecked(false);
+                ((CheckBox) findViewById(R.id.female_checkBox)).setChecked(false);
+                break;
+
+        }
     }
 
     protected void createLocationRequest(){
@@ -167,8 +205,8 @@ public class MainActivity extends AppCompatActivity {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1200000);
         mLocationRequest.setFastestInterval(1200000);
-        mLocationRequest.setSmallestDisplacement(100);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        mLocationRequest.setSmallestDisplacement(0);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
         //*/
 
     }

@@ -1,5 +1,6 @@
 package com.example.siubo.wheretoyov50;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
 
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected LocationRequest mLocationRequest;
     protected LocationCallback mLocationCallback;
     protected DatabaseReference ref;
+    protected FileOutputStream fos;
     protected double home_lat, home_lng, ori_lat, ori_lng;
     protected int first_stayed, stayed;
 
@@ -68,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
         home_lng = 0.0;
         first_stayed = 1500;
 
-
-        ref = FirebaseDatabase.getInstance().getReference("data");
+        ref = FirebaseDatabase.getInstance().getReference("haha");
         mLocationCallback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult){
@@ -78,8 +80,9 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 for (Location location : locationResult.getLocations()) {
-                    if (home_lat != 0.0 && home_lng != 0.0 && dist(home_lat, home_lng, location.getLatitude(), location.getLongitude()) < 200) {
+                    if (home_lat != 0.0 && home_lng != 0.0 && dist(home_lat, home_lng, location.getLatitude(), location.getLongitude()) < 100) {
                         Log.d("MAIN", "Near Home.");
+                        printlog("Near Home.");
                         return;
                     }
 
@@ -88,11 +91,13 @@ public class MainActivity extends AppCompatActivity {
                         ori_lng = location.getLongitude();
                         first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
                         Log.d("MAIN", "Location Update Init.");
+                        printlog("Location Update Init.");
                         return;
                     }
 
                     if (dist(ori_lat, ori_lng, location.getLatitude(), location.getLongitude()) < 100){
                         Log.d("MAIN", "Still Within 100 Meters Range.");
+                        printlog("Still Within 100 Meters Range.");
                         return;
                     }
 
@@ -105,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         ori_lng = location.getLongitude();
                         first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
                         Log.d("MAIN", "Stayed Less Than 30 Mins.");
+                        printlog("Stayed Less Than 30 Mins.");
                         return;
                     }
 
@@ -124,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     ori_lng = location.getLongitude();
                     first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
                     Log.d("MAIN", "Reinit Location Update.");
+                    printlog("Added Item to Database.");
                 }
             }
         };
@@ -191,6 +198,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
         }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        try {
+            fos.close();
+            Log.d("MAIN", "Closed Log File.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return;
     }
 
     protected void createLocationRequest(){
@@ -318,5 +337,10 @@ public class MainActivity extends AppCompatActivity {
         return location1.distanceTo(location2);
     }
 
+    public void printlog(String message){
+        ((TextView) findViewById(R.id.textView1)).append(Integer.toString(Calendar.DAY_OF_MONTH) + " " + Integer.toString(Calendar.HOUR_OF_DAY)
+                + ":" + Integer.toString(Calendar.MINUTE) + " " + message);
+        return;
+    }
 
 }

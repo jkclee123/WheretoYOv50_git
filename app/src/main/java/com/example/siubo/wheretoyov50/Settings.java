@@ -70,7 +70,7 @@ public class Settings extends AppCompatActivity {
     }
 
     public void SaveClick(View view){
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         String newline = "\n";
         try {
             fos = openFileOutput(HOME_FILENAME, Context.MODE_PRIVATE);

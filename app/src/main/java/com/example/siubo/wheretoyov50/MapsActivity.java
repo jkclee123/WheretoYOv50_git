@@ -51,7 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mClusterManager = new ClusterManager<MyItem>(this, getMap());
         getMap().setOnCameraIdleListener(mClusterManager);
         getMap().setOnMarkerClickListener(mClusterManager);
-        ref = FirebaseDatabase.getInstance().getReference("data");
+        ref = FirebaseDatabase.getInstance().getReference("haha");
         Log.d("MAIN", "Looking For Gender = " + Integer.toString(gender) + " Markers.");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

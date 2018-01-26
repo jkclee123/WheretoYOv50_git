@@ -60,6 +60,8 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@android:color/black"
         android:fontFamily="monospace"
+        android:maxLines = "999"
+        android:scrollbars = "vertical"
         android:textColor="@android:color/holo_green_light"
         android:textSize="12sp"
         android:textStyle="bold"

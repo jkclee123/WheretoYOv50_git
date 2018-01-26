@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     protected LocationRequest mLocationRequest;
     protected LocationCallback mLocationCallback;
     protected DatabaseReference ref;
-    protected FileOutputStream fos;
     protected double home_lat, home_lng, ori_lat, ori_lng;
     protected int first_stayed, stayed;
 
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         first_stayed = 1500;
 
         ref = FirebaseDatabase.getInstance().getReference("haha");
+        ((TextView) findViewById(R.id.textView1)).setMovementMethod(new ScrollingMovementMethod());
         mLocationCallback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult){
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 for (Location location : locationResult.getLocations()) {
-                    if (home_lat != 0.0 && home_lng != 0.0 && dist(home_lat, home_lng, location.getLatitude(), location.getLongitude()) < 100) {
+                    if (home_lat != 0.0 && home_lng != 0.0 && dist(home_lat, home_lng, location.getLatitude(), location.getLongitude()) < 200) {
                         Log.d("MAIN", "Near Home.");
                         printlog("Near Home.");
                         return;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    if (dist(ori_lat, ori_lng, location.getLatitude(), location.getLongitude()) < 100){
+                    if (dist(ori_lat, ori_lng, location.getLatitude(), location.getLongitude()) < 200){
                         Log.d("MAIN", "Still Within 100 Meters Range.");
                         printlog("Still Within 100 Meters Range.");
                         return;
@@ -200,23 +201,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        try {
-            fos.close();
-            Log.d("MAIN", "Closed Log File.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return;
-    }
-
     protected void createLocationRequest(){
         /*
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setInterval(100);
+        mLocationRequest.setFastestInterval(100);
         mLocationRequest.setSmallestDisplacement(0);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
         */

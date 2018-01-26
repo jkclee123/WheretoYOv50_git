@@ -338,8 +338,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void printlog(String message){
-        ((TextView) findViewById(R.id.textView1)).append(Integer.toString(Calendar.DAY_OF_MONTH) + " " + Integer.toString(Calendar.HOUR_OF_DAY)
-                + ":" + Integer.toString(Calendar.MINUTE) + " " + message);
+        ((TextView) findViewById(R.id.textView1)).append(Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) + " "
+                + Integer.toString(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) + ":"
+                + Integer.toString(Calendar.getInstance().get(Calendar.MINUTE)) + " " + message + "\n");
         return;
     }
 

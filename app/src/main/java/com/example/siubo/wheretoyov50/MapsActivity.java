@@ -3,7 +3,9 @@ package com.example.siubo.wheretoyov50;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,7 +28,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected ClusterManager<MyItem> mClusterManager;
     protected DefaultClusterRenderer<MyItem> mDefaultClusterRenderer;
     protected DatabaseReference ref;
-    protected String lastseen, week_snippet, weeks;
+    protected String lastseen, week_snippet, weeks, stayed_title;
     protected int week_cal;
 
     public GoogleMap getMap() {
@@ -43,6 +45,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
+            }
+        });
     }
 
     public void onMapReady(GoogleMap googleMap) {
@@ -72,10 +84,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             weeks = "week";
                         else
                             weeks = "weeks";
-                        week_snippet = Integer.toString(week_cal) + " "+ weeks + " ago";
+                        week_snippet = Integer.toString(week_cal) + " " + weeks + " ago";
                     }
+                    stayed_title = "Stayed " + ds.child("hour").getValue();
                     MyItem marker = new MyItem( (double) ds.child("lat").getValue(),
-                            (double) ds.child("lng").getValue(), (String) ds.child("hour").getValue(), week_snippet);
+                            (double) ds.child("lng").getValue(), stayed_title, week_snippet);
                     mClusterManager.addItem(marker);
                 }
                 getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(22.3964, 114.1095), 10));

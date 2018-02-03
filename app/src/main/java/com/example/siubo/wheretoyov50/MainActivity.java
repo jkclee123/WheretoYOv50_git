@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -115,10 +116,10 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
+                    String key = ref.push().getKey();
                     DatabaseItem additem = new DatabaseItem(iamgender, ori_lat, ori_lng,
                             Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
                             Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
-                    String key = ref.push().getKey();
                     ref.child(key).setValue(additem);
                     Log.d("MAIN", "Added Item to Database.");
                     Log.d("MAIN", "Key: " + key);
@@ -131,10 +132,12 @@ public class MainActivity extends AppCompatActivity {
                     ori_lng = location.getLongitude();
                     first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
                     Log.d("MAIN", "Reinit Location Update.");
-                    printlog("Added Item to Database.");
                 }
             }
         };
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     @Override

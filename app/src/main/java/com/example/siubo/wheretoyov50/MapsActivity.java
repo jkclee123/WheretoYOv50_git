@@ -28,7 +28,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected ClusterManager<MyItem> mClusterManager;
     protected DefaultClusterRenderer<MyItem> mDefaultClusterRenderer;
     protected DatabaseReference ref;
-    protected String lastseen, week_snippet, weeks, stayed_title;
+    protected String lastseen, week_snippet, weeks, stayed_title, hour, minute;
     protected int week_cal;
 
     public GoogleMap getMap() {
@@ -86,7 +86,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             weeks = "weeks";
                         week_snippet = Integer.toString(week_cal) + " " + weeks + " ago";
                     }
-                    stayed_title = "Stayed " + ds.child("hour").getValue();
+                    String[] stayed_time = ((String) ds.child("hour").getValue()).split(":", -1);
+                    stayed_title = "Stayed " + stayed_time[0] + "hr " + stayed_time[1] + "min";
                     MyItem marker = new MyItem( (double) ds.child("lat").getValue(),
                             (double) ds.child("lng").getValue(), stayed_title, week_snippet);
                     mClusterManager.addItem(marker);

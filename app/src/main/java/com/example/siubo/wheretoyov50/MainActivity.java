@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Process;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -61,9 +63,13 @@ public class MainActivity extends AppCompatActivity {
     protected int first_stayed, stayed;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+        startActivity(homeIntent);     startActivity(homeIntent);
         setContentView(R.layout.activity_main);
         Log.d("MAIN", "Main onCreate.");
         iamgender = 2;
@@ -73,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         first_stayed = 1500;
 
         ref = FirebaseDatabase.getInstance().getReference("haha");
-        ((TextView) findViewById(R.id.textView1)).setMovementMethod(new ScrollingMovementMethod());
         mLocationCallback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult){
@@ -84,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 for (Location location : locationResult.getLocations()) {
                     if (home_lat != 0.0 && home_lng != 0.0 && dist(home_lat, home_lng, location.getLatitude(), location.getLongitude()) < 200) {
                         Log.d("MAIN", "Near Home.");
-                        printlog("Near Home.");
                         return;
                     }
 
@@ -93,13 +97,11 @@ public class MainActivity extends AppCompatActivity {
                         ori_lng = location.getLongitude();
                         first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
                         Log.d("MAIN", "Location Update Init.");
-                        printlog("Location Update Init.");
                         return;
                     }
 
                     if (dist(ori_lat, ori_lng, location.getLatitude(), location.getLongitude()) < 200){
                         Log.d("MAIN", "Still Within 100 Meters Range.");
-                        printlog("Still Within 100 Meters Range.");
                         return;
                     }
 
@@ -112,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                         ori_lng = location.getLongitude();
                         first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
                         Log.d("MAIN", "Stayed Less Than 30 Mins.");
-                        printlog("Stayed Less Than 30 Mins.");
                         return;
                     }
 
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         Log.d("MAIN", "Main onResume.");
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("MAIN", "Requesting Permission...");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -159,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MAIN", "Success");
             getSettings();
         }
+
         String line;
         try{
             FileInputStream fin = openFileInput(HOME_FILENAME);
@@ -327,13 +330,6 @@ public class MainActivity extends AppCompatActivity {
         location2.setLongitude(latlng2.longitude);
 
         return location1.distanceTo(location2);
-    }
-
-    public void printlog(String message){
-        ((TextView) findViewById(R.id.textView1)).append(Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) + " "
-                + Integer.toString(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) + ":"
-                + Integer.toString(Calendar.getInstance().get(Calendar.MINUTE)) + " " + message + "\n");
-        return;
     }
 
 }

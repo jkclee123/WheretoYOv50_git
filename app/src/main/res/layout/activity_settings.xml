@@ -14,48 +14,145 @@
         android:background="?attr/colorPrimary"
         app:titleTextColor="@color/common_google_signin_btn_text_dark_default"/>
 
-    <CheckBox
-        android:id="@+id/immale_checkBox"
-        android:layout_width="106dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="10dp"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="onGenderCheckboxClicked"
-        android:text="I am Male"
+        android:text="Tell us what you like:"
+        android:textSize="19sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <CheckBox
-        android:id="@+id/imfemale_checkBox"
-        android:layout_width="118dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:onClick="onGenderCheckboxClicked"
-        android:text="I am Female"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/immale_checkBox" />
-
-    <Button
-        android:id="@+id/button3"
+        android:id="@+id/mycheckBox0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Choose Home"
-        android:onClick="ChooseHomeClick"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onMyAttriCheckboxClicked"
+        android:text="Hiking"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imfemale_checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <CheckBox
+        android:id="@+id/mycheckBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:text="Shopping"
+        android:textSize="16sp"
+        android:onClick="onMyAttriCheckboxClicked"
+        app:layout_constraintStart_toEndOf="@+id/mycheckBox0"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <CheckBox
+        android:id="@+id/mycheckBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onMyAttriCheckboxClicked"
+        android:text="Sports"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/mycheckBox1"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <CheckBox
+        android:id="@+id/mycheckBox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:onClick="onMyAttriCheckboxClicked"
+        android:text="Video Gaming"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mycheckBox0" />
+
+    <CheckBox
+        android:id="@+id/mycheckBox4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="Concert"
+        android:textSize="16sp"
+        android:onClick="onMyAttriCheckboxClicked"
+        app:layout_constraintStart_toEndOf="@+id/mycheckBox3"
+        app:layout_constraintTop_toBottomOf="@+id/mycheckBox1" />
+
+    <CheckBox
+        android:id="@+id/mycheckBox5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:text="Drama"
+        android:textSize="16sp"
+        android:onClick="onMyAttriCheckboxClicked"
+        app:layout_constraintStart_toEndOf="@+id/mycheckBox4"
+        app:layout_constraintTop_toBottomOf="@+id/mycheckBox2" />
+
+    <CheckBox
+        android:id="@+id/mycheckBox6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:onClick="onMyAttriCheckboxClicked"
+        android:text="Band Show"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mycheckBox3" />
+
+    <CheckBox
+        android:id="@+id/mycheckBox7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:text="Karaoke"
+        android:textSize="16sp"
+        android:onClick="onMyAttriCheckboxClicked"
+        app:layout_constraintStart_toEndOf="@+id/mycheckBox6"
+        app:layout_constraintTop_toBottomOf="@+id/mycheckBox4" />
+
+    <CheckBox
+        android:id="@+id/mycheckBox8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:text="Water Sports"
+        android:textSize="16sp"
+        android:onClick="onMyAttriCheckboxClicked"
+        app:layout_constraintStart_toEndOf="@+id/mycheckBox7"
+        app:layout_constraintTop_toBottomOf="@+id/mycheckBox5" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:text="SAVE"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
         android:onClick="SaveClick"
+        android:text="SAVE"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="32dp"
+        android:onClick="ChooseHomeClick"
+        android:text="Choose Home"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mycheckBox6" />
 
 </android.support.constraint.ConstraintLayout>

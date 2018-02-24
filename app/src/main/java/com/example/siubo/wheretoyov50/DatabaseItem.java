@@ -5,14 +5,14 @@ package com.example.siubo.wheretoyov50;
  */
 
 public class DatabaseItem {
-    public long gender;
+    public long attri;
     public double lat;
     public double lng;
     public String hour;
     public String lastseen;
 
-    public DatabaseItem (long gender, double lat, double lng, String hour, String lastseen){
-        this.gender = gender;
+    public DatabaseItem (long attri, double lat, double lng, String hour, String lastseen){
+        this.attri = attri;
         this.lat = lat;
         this.lng = lng;
         this.hour = hour;

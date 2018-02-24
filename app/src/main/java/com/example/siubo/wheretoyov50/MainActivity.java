@@ -51,8 +51,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
-    protected static int gender;
-    protected static int iamgender;
+    protected static int my_attri, attri;
     protected String FILENAME = "user_info";
     protected String HOME_FILENAME = "home_info";
     protected FusedLocationProviderClient mFusedLocationClient;
@@ -69,11 +68,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
-        startActivity(homeIntent);     startActivity(homeIntent);
+        startActivity(homeIntent);
         setContentView(R.layout.activity_main);
         Log.d("MAIN", "Main onCreate.");
-        iamgender = 2;
-        gender = 2;
+        my_attri = 0;
+        attri = 0;
         home_lat = 0.0;
         home_lng = 0.0;
         first_stayed = 1500;
@@ -82,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         mLocationCallback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult){
-                if (iamgender == 2) {
-                    Log.d("MAIN", "iamgender Not Init.");
+                if (my_attri == 2) {
+                    Log.d("MAIN", "my_attri Not Init.");
                     return;
                 }
                 for (Location location : locationResult.getLocations()) {
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (dist(ori_lat, ori_lng, location.getLatitude(), location.getLongitude()) < 200){
-                        Log.d("MAIN", "Still Within 100 Meters Range.");
+                        Log.d("MAIN", "Still Within 200 Meters Range.");
                         return;
                     }
 
@@ -118,13 +117,13 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     String key = ref.push().getKey();
-                    DatabaseItem additem = new DatabaseItem(iamgender, ori_lat, ori_lng,
+                    DatabaseItem additem = new DatabaseItem(my_attri, ori_lat, ori_lng,
                             Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
                             Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
                     ref.child(key).setValue(additem);
                     Log.d("MAIN", "Added Item to Database.");
                     Log.d("MAIN", "Key: " + key);
-                    Log.d("MAIN", "iamgender: " + Integer.toString(iamgender));
+                    Log.d("MAIN", "my_attri: " + Integer.toString(my_attri));
                     Log.d("MAIN", "Lat: " + Double.toString(ori_lat));
                     Log.d("MAIN", "Lng: " + Double.toString(ori_lng));
                     Log.d("MAIN", "Stayed: " + Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60));
@@ -136,8 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
@@ -183,28 +181,31 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
             for (int i = 0; (line = bufferedReader.readLine()) != null; i++){
                 if (i == 0)
-                    iamgender = Integer.parseInt(line);
+                    my_attri = Integer.parseInt(line);
             }
             fin.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if ((attri & 1) == 1)
+            ((CheckBox) findViewById(R.id.checkBox0)).setChecked(true);
+        if ((attri & 2) == 2)
+            ((CheckBox) findViewById(R.id.checkBox1)).setChecked(true);
+        if ((attri & 4) == 4)
+            ((CheckBox) findViewById(R.id.checkBox2)).setChecked(true);
+        if ((attri & 8) == 8)
+            ((CheckBox) findViewById(R.id.checkBox3)).setChecked(true);
+        if ((attri & 16) == 16)
+            ((CheckBox) findViewById(R.id.checkBox4)).setChecked(true);
+        if ((attri & 32) == 32)
+            ((CheckBox) findViewById(R.id.checkBox5)).setChecked(true);
+        if ((attri & 64) == 64)
+            ((CheckBox) findViewById(R.id.checkBox6)).setChecked(true);
+        if ((attri & 128) == 128)
+            ((CheckBox) findViewById(R.id.checkBox7)).setChecked(true);
+        if ((attri & 256) == 256)
+            ((CheckBox) findViewById(R.id.checkBox8)).setChecked(true);
 
-        switch(gender){
-            case 0:
-                ((CheckBox) findViewById(R.id.male_checkBox)).setChecked(false);
-                ((CheckBox) findViewById(R.id.female_checkBox)).setChecked(true);
-                break;
-            case 1:
-                ((CheckBox) findViewById(R.id.male_checkBox)).setChecked(true);
-                ((CheckBox) findViewById(R.id.female_checkBox)).setChecked(false);
-                break;
-            case 2:
-                ((CheckBox) findViewById(R.id.male_checkBox)).setChecked(false);
-                ((CheckBox) findViewById(R.id.female_checkBox)).setChecked(false);
-                break;
-
-        }
     }
 
     protected void createLocationRequest(){
@@ -268,51 +269,63 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onGenderCheckboxClicked(View view) {
+    public void onAttriCheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();
-        switch(view.getId()) {
-            case R.id.male_checkBox:
-                if (checked){
-                    ((CheckBox) view).setChecked(true);
-                    ((CheckBox) findViewById(R.id.female_checkBox)).setChecked(false);
-                    gender = 1;
-                }
-                else{
-                    ((CheckBox) view).setChecked(false);
-                    ((CheckBox) findViewById(R.id.female_checkBox)).setChecked(false);
-                    gender = 2;
-                }
+        switch (view.getId()) {
+            case R.id.checkBox0:
+                if (checked) attri += 1;
+                else attri -= 1;
                 break;
-            case R.id.female_checkBox:
-                if (checked){
-                    ((CheckBox) view).setChecked(true);
-                    ((CheckBox) findViewById(R.id.male_checkBox)).setChecked(false);
-                    gender = 0;
-                }
-                else{
-                    ((CheckBox) view).setChecked(false);
-                    ((CheckBox) findViewById(R.id.male_checkBox)).setChecked(false);
-                    gender = 2;
-                }
+            case R.id.checkBox1:
+                if (checked) attri += 2;
+                else attri -= 2;
+                break;
+            case R.id.checkBox2:
+                if (checked) attri += 4;
+                else attri -= 4;
+                break;
+            case R.id.checkBox3:
+                if (checked) attri += 8;
+                else attri -= 8;
+                break;
+            case R.id.checkBox4:
+                if (checked) attri += 16;
+                else attri -= 16;
+                break;
+            case R.id.checkBox5:
+                if (checked) attri += 32;
+                else attri -= 32;
+                break;
+            case R.id.checkBox6:
+                if (checked) attri += 64;
+                else attri -= 64;
+                break;
+            case R.id.checkBox7:
+                if (checked) attri += 128;
+                else attri -= 128;
+                break;
+            case R.id.checkBox8:
+                if (checked) attri += 256;
+                else attri -= 256;
                 break;
         }
     }
 
     public void onButtonClicked(View view){
-        if (iamgender != 2 && gender != 2){
+        if (my_attri != 0 && attri != 0){
             Intent intent = new Intent(this, MapsActivity.class);
-            intent.putExtra("GENDER", gender);
+            intent.putExtra("ATTRI", attri);
             startActivity(intent);
         }
-        else if (iamgender == 2)
+        else if (my_attri == 0)
             Toast.makeText(this, "Provide information before using the map.", Toast.LENGTH_SHORT).show();
-        else if (gender == 2)
+        else if (attri == 0)
             Toast.makeText(this, "Choose what you want to search for.", Toast.LENGTH_SHORT).show();
     }
 
     public void onSettingsButtonClicked(View view){
         Intent intent = new Intent(this, com.example.siubo.wheretoyov50.Settings.class);
-        intent.putExtra("IAMGENDER", iamgender);
+        intent.putExtra("MY_ATTRI", my_attri);
         intent.putExtra("HOME_LAT", home_lat);
         intent.putExtra("HOME_LNG", home_lng);
         startActivity(intent);

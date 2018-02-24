@@ -24,7 +24,7 @@ import java.util.Calendar;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     protected GoogleMap mMap;
-    protected int gender;
+    protected int attri;
     protected ClusterManager<MyItem> mClusterManager;
     protected DefaultClusterRenderer<MyItem> mDefaultClusterRenderer;
     protected DatabaseReference ref;
@@ -41,7 +41,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         Intent intent = getIntent();
-        gender = intent.getExtras().getInt("GENDER");
+        attri = intent.getExtras().getInt("ATTRI");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -64,14 +64,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getMap().setOnCameraIdleListener(mClusterManager);
         getMap().setOnMarkerClickListener(mClusterManager);
         ref = FirebaseDatabase.getInstance().getReference("haha");
-        Log.d("MAIN", "Looking For Gender = " + Integer.toString(gender) + " Markers.");
+        Log.d("MAIN", "Looking For attri = " + Integer.toString(attri) + " Markers.");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                long getgender;
+                long getattri;
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    getgender = (long) ds.child("gender").getValue();
-                    if (getgender != gender)
+                    getattri = (long) ds.child("attri").getValue();
+                    if ((getattri & attri) != attri)
                         continue;
                     lastseen = (String) ds.child("lastseen").getValue();
                     week_cal = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - Integer.parseInt(lastseen);

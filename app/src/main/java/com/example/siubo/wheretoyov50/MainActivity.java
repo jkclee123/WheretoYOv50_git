@@ -187,24 +187,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if ((attri & 1) == 1)
-            ((CheckBox) findViewById(R.id.checkBox0)).setChecked(true);
-        if ((attri & 2) == 2)
-            ((CheckBox) findViewById(R.id.checkBox1)).setChecked(true);
-        if ((attri & 4) == 4)
-            ((CheckBox) findViewById(R.id.checkBox2)).setChecked(true);
-        if ((attri & 8) == 8)
-            ((CheckBox) findViewById(R.id.checkBox3)).setChecked(true);
-        if ((attri & 16) == 16)
-            ((CheckBox) findViewById(R.id.checkBox4)).setChecked(true);
-        if ((attri & 32) == 32)
-            ((CheckBox) findViewById(R.id.checkBox5)).setChecked(true);
-        if ((attri & 64) == 64)
-            ((CheckBox) findViewById(R.id.checkBox6)).setChecked(true);
-        if ((attri & 128) == 128)
-            ((CheckBox) findViewById(R.id.checkBox7)).setChecked(true);
-        if ((attri & 256) == 256)
-            ((CheckBox) findViewById(R.id.checkBox8)).setChecked(true);
 
     }
 

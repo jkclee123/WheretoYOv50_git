@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         };
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
     }
 
     @Override
@@ -187,6 +188,16 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        attri = 0;
+        ((CheckBox) findViewById(R.id.checkBox0)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox1)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox2)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox3)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox4)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox5)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox6)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox7)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox8)).setChecked(false);
 
     }
 

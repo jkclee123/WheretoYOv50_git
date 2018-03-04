@@ -33,7 +33,11 @@
         <activity
             android:name=".Settings"
             android:label="@string/title_settings"></activity>
+
         <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".DeleteMarker"></activity>
+        <activity android:name=".ModifyMarker"></activity>
+        <activity android:name=".DefaultMarker"></activity>
     </application>
 
 </manifest>

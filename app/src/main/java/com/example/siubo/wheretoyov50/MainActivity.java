@@ -1,5 +1,7 @@
 package com.example.siubo.wheretoyov50;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +12,8 @@ import android.os.Process;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -54,14 +58,16 @@ public class MainActivity extends AppCompatActivity {
     protected static int my_attri, attri;
     protected String FILENAME = "user_info";
     protected String HOME_FILENAME = "home_info";
+    protected String NOTI_FILENAME = "noti_file";
     protected FusedLocationProviderClient mFusedLocationClient;
     protected LocationRequest mLocationRequest;
     protected LocationCallback mLocationCallback;
     protected DatabaseReference ref;
     protected double home_lat, home_lng, ori_lat, ori_lng;
     protected int first_stayed, stayed;
-
-
+    protected Context mContext;
+    protected String file_key;
+    protected int start;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +78,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("MAIN", "Main onCreate.");
         my_attri = 0;
-        attri = 0;
         home_lat = 0.0;
         home_lng = 0.0;
         first_stayed = 1500;
+        start = 0;
+        mContext = this;
 
         ref = FirebaseDatabase.getInstance().getReference("haha");
         mLocationCallback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult){
+                //if (start == 1)
+                //    return;
                 if (my_attri == 2) {
                     Log.d("MAIN", "my_attri Not Init.");
                     return;
@@ -121,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                             Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
                             Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
                     ref.child(key).setValue(additem);
+
                     Log.d("MAIN", "Added Item to Database.");
                     Log.d("MAIN", "Key: " + key);
                     Log.d("MAIN", "my_attri: " + Integer.toString(my_attri));
@@ -132,6 +142,51 @@ public class MainActivity extends AppCompatActivity {
                     ori_lng = location.getLongitude();
                     first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
                     Log.d("MAIN", "Reinit Location Update.");
+
+                    try {
+                        FileInputStream fin = openFileInput(NOTI_FILENAME);
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
+                        file_key = bufferedReader.readLine();
+                        fin.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (file_key != null) {
+                        if (file_key.length() > 5) {
+                            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                            notificationManager.cancel(1);
+                        }
+                    }
+                    FileOutputStream fos;
+                    String newline = "\n";
+                    try {
+                        fos = openFileOutput(NOTI_FILENAME, Context.MODE_PRIVATE);
+                        fos.write(key.getBytes());
+                        fos.write(newline.getBytes());
+                        fos.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent modifyIntent = new Intent(mContext, ModifyMarker.class);
+                    Intent deleteIntent = new Intent(mContext, DeleteMarker.class);
+                    Intent defaultIntent = new Intent(mContext, DefaultMarker.class);
+                    PendingIntent modifyPendingIntent = PendingIntent.getActivity(mContext, 0, modifyIntent, 0);
+                    PendingIntent deletePendingIntent = PendingIntent.getActivity(mContext, 0, deleteIntent, 0);
+                    PendingIntent defaultPendingIntent = PendingIntent.getActivity(mContext, 0, defaultIntent, 0);
+                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("New attraction found!")
+                            .setContentText("Tell us about the place you stayed")
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            .addAction(R.drawable.ic_launcher_background, "MODIFY", modifyPendingIntent)
+                            .addAction(R.drawable.ic_launcher_background, "DELETE", deletePendingIntent)
+                            .addAction(R.drawable.ic_launcher_background, "DEFAULT", defaultPendingIntent);
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(mContext);
+                    notificationManager.notify(1, mBuilder.build());
+                    //start = 1;
                 }
             }
         };
@@ -144,6 +199,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         Log.d("MAIN", "Main onResume.");
+
+        attri = 0;
+        ((CheckBox) findViewById(R.id.checkBox0)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox1)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox2)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox3)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox4)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox5)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox6)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox7)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox8)).setChecked(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("MAIN", "Requesting Permission...");
@@ -188,16 +254,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        attri = 0;
-        ((CheckBox) findViewById(R.id.checkBox0)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox1)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox2)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox3)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox4)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox5)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox6)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox7)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox8)).setChecked(false);
 
     }
 

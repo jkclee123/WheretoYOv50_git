@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,19 +34,19 @@ public class ModifyMarker extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(1);
         my_attri = 0;
         ref = FirebaseDatabase.getInstance().getReference("haha");
-
-        try {
-            FileInputStream fin = openFileInput(NOTI_FILENAME);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
-            key = bufferedReader.readLine();
-            fin.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
+            }
+        });
     }
 
     public void onMyAttriCheckboxClicked(View view) {
@@ -92,8 +93,18 @@ public class ModifyMarker extends AppCompatActivity{
     }
 
     public void onModifyButtonPressed(View view) {
-        if (my_attri == 0)
+        if (my_attri == 0) {
+            Toast.makeText(this, "Modify attributes before submit.", Toast.LENGTH_SHORT).show();
             return;
+        }
+        try {
+            FileInputStream fin = openFileInput(NOTI_FILENAME);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
+            key = bufferedReader.readLine();
+            fin.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ref.child(key).child("attri").setValue(my_attri);
         FileOutputStream fos;
         String newline = "\n";
@@ -108,6 +119,7 @@ public class ModifyMarker extends AppCompatActivity{
         }
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(1);
+        Toast.makeText(this, "Location Modified.", Toast.LENGTH_SHORT).show();
         finish();
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -54,6 +55,7 @@ public class DeleteMarker extends AppCompatActivity{
         }
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(1);
+        Toast.makeText(this, "Location deleted.", Toast.LENGTH_SHORT).show();
         finish();
     }
 }

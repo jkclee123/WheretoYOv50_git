@@ -26,6 +26,7 @@ import android.widget.Toast;
 import android.Manifest;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -87,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
         ref = FirebaseDatabase.getInstance().getReference("haha");
         mLocationCallback = new LocationCallback(){
             @Override
+            public void onLocationAvailability(LocationAvailability locationAvailability){
+                super.onLocationAvailability(locationAvailability);
+                if (!locationAvailability.isLocationAvailable())
+                    first_stayed = 1500;
+            }
+            @Override
             public void onLocationResult(LocationResult locationResult){
                 //if (start == 1)
                 //    return;
@@ -129,6 +136,11 @@ public class MainActivity extends AppCompatActivity {
                     DatabaseItem additem = new DatabaseItem(my_attri, ori_lat, ori_lng,
                             Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
                             Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+                    /*
+                    DatabaseItem additem = new DatabaseItem(my_attri, ori_lat, ori_lng,
+                            Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
+                            Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)));
+                    */
                     ref.child(key).setValue(additem);
 
                     Log.d("MAIN", "Added Item to Database.");
@@ -186,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
                             .addAction(R.drawable.ic_launcher_background, "DEFAULT", defaultPendingIntent);
                     NotificationManagerCompat notificationManager = NotificationManagerCompat.from(mContext);
                     notificationManager.notify(1, mBuilder.build());
-                    //start = 1;
                 }
             }
         };
@@ -378,6 +389,66 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("HOME_LAT", home_lat);
         intent.putExtra("HOME_LNG", home_lng);
         startActivity(intent);
+    }
+
+    public void onNotiButtonClicked(View view){
+        String key = ref.push().getKey();
+        DatabaseItem additem = new DatabaseItem(my_attri, 0.1, 0.1,
+                Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
+                Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+        ref.child(key).setValue(additem);
+
+        Log.d("MAIN", "Added Item to Database.");
+        Log.d("MAIN", "Key: " + key);
+        Log.d("MAIN", "my_attri: " + Integer.toString(my_attri));
+        Log.d("MAIN", "Lat: " + Double.toString(ori_lat));
+        Log.d("MAIN", "Lng: " + Double.toString(ori_lng));
+        Log.d("MAIN", "Stayed: " + Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60));
+        Log.d("MAIN", "Lastseen: " + Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+
+        try {
+            FileInputStream fin = openFileInput(NOTI_FILENAME);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
+            file_key = bufferedReader.readLine();
+            fin.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (file_key != null) {
+            if (file_key.length() > 5) {
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.cancel(1);
+            }
+        }
+        FileOutputStream fos;
+        String newline = "\n";
+        try {
+            fos = openFileOutput(NOTI_FILENAME, Context.MODE_PRIVATE);
+            fos.write(key.getBytes());
+            fos.write(newline.getBytes());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Intent modifyIntent = new Intent(mContext, ModifyMarker.class);
+        Intent deleteIntent = new Intent(mContext, DeleteMarker.class);
+        Intent defaultIntent = new Intent(mContext, DefaultMarker.class);
+        PendingIntent modifyPendingIntent = PendingIntent.getActivity(mContext, 0, modifyIntent, 0);
+        PendingIntent deletePendingIntent = PendingIntent.getActivity(mContext, 0, deleteIntent, 0);
+        PendingIntent defaultPendingIntent = PendingIntent.getActivity(mContext, 0, defaultIntent, 0);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("New attraction found!")
+                .setContentText("Tell us about the place you stayed")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .addAction(R.drawable.ic_launcher_background, "MODIFY", modifyPendingIntent)
+                .addAction(R.drawable.ic_launcher_background, "DELETE", deletePendingIntent)
+                .addAction(R.drawable.ic_launcher_background, "DEFAULT", defaultPendingIntent);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(mContext);
+        notificationManager.notify(1, mBuilder.build());
     }
 
     public double dist(double lat1, double lng1, double lat2, double lng2){

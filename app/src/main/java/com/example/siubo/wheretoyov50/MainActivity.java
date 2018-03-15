@@ -69,13 +69,17 @@ public class MainActivity extends AppCompatActivity {
     protected Context mContext;
     protected String file_key;
     protected int start;
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
-        startActivity(homeIntent);
+        prefManager = new PrefManager(this);
+        if (!prefManager.isFirstTimeLaunch()) {
+            Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(homeIntent);
+        }
         setContentView(R.layout.activity_main);
         Log.d("MAIN", "Main onCreate.");
         my_attri = 0;

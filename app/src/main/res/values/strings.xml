@@ -2,4 +2,24 @@
     <string name="app_name">Where to YO v5.0</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_settings">Settings</string>
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Settings</string>
+    <string name="slide_1_desc">Let us know more about you!</string>
+
+    <string name="slide_2_title">Share Location</string>
+    <string name="slide_2_desc">Share your location with others!</string>
+
+    <string name="slide_3_title">Places of interest</string>
+    <string name="slide_3_desc">Check out other places of interest around Hong Kong!</string>
+
+    <string name="slide_4_title">Friends</string>
+    <string name="slide_4_desc">Share this app and meet new friends!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
 </resources>

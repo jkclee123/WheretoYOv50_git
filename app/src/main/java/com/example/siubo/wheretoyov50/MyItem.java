@@ -11,6 +11,7 @@ public class MyItem implements ClusterItem {
     private LatLng mPosition;
     private String mTitle;
     private String mSnippet;
+    private String mComment;
 
     public MyItem(LatLng latlng) {
         mPosition = latlng;
@@ -28,6 +29,13 @@ public class MyItem implements ClusterItem {
         mPosition = new LatLng(lat, lng);
         mTitle = hour;
         mSnippet = lastseen;
+    }
+
+    public MyItem(double lat, double lng, String hour, String lastseen, String comment) {
+        mPosition = new LatLng(lat, lng);
+        mTitle = hour;
+        mSnippet = lastseen;
+        mComment = comment;
     }
 
     public MyItem(LatLng latlng, String title, String snippet) {

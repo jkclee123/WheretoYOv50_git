@@ -28,8 +28,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected ClusterManager<MyItem> mClusterManager;
     protected DefaultClusterRenderer<MyItem> mDefaultClusterRenderer;
     protected DatabaseReference ref;
-    protected String lastseen, week_snippet, weeks, stayed_title, diff_snippet;
-    protected int week_cal;
+    protected String lastseen, stayed_title, diff_snippet;
 
     public GoogleMap getMap() {
         return mMap;
@@ -63,7 +62,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mClusterManager = new ClusterManager<MyItem>(this, getMap());
         getMap().setOnCameraIdleListener(mClusterManager);
         getMap().setOnMarkerClickListener(mClusterManager);
-        ref = FirebaseDatabase.getInstance().getReference("haha");
+        ref = FirebaseDatabase.getInstance().getReference(getString(R.string.database));
         Log.d("MAIN", "Looking For attri = " + Integer.toString(attri) + " Markers.");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -74,34 +73,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if ((getattri & attri) != attri)
                         continue;
                     lastseen = (String) ds.child("lastseen").getValue();
-                    week_cal = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - Integer.parseInt(lastseen);
-                    if (week_cal < 0)
-                        week_cal += 52;
-                    if (week_cal == 0)
-                        week_snippet = "This week";
-                    else {
-                        if (week_cal == 1)
-                            weeks = "week";
-                        else
-                            weeks = "weeks";
-                        week_snippet = Integer.toString(week_cal) + " " + weeks + " ago";
-                    }
-                    /*
-                    lastseen = (String) ds.child("lastseen").getValue();
                     int diff = Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - Integer.parseInt(lastseen);
-                    if (diff <= 1)
+                    if (diff == 0)
+                        diff_snippet = "Today";
+                    else if (diff <= 1)
                         diff_snippet = Integer.toString(diff) + " day ago";
-                    if (diff < 7)
+                    else if (diff < 7)
                         diff_snippet = Integer.toString(diff) + " days ago";
-                    if (diff < 14)
+                    else if (diff < 14)
                         diff_snippet = Integer.toString(diff / 7) + " week ago";
                     else
                         diff_snippet = Integer.toString(diff / 7) + " weeks ago";
-                    */
                     String[] stayed_time = ((String) ds.child("hour").getValue()).split(":", -1);
                     stayed_title = "Stayed " + stayed_time[0] + "hr " + stayed_time[1] + "min";
                     MyItem marker = new MyItem( (double) ds.child("lat").getValue(),
-                            (double) ds.child("lng").getValue(), stayed_title, week_snippet);
+                            (double) ds.child("lng").getValue(), stayed_title, diff_snippet);
                     mClusterManager.addItem(marker);
                 }
                 getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(22.3964, 114.1095), 10));

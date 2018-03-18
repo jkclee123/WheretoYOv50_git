@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         start = 0;
         mContext = this;
 
-        ref = FirebaseDatabase.getInstance().getReference("haha");
+        ref = FirebaseDatabase.getInstance().getReference(getString(R.string.database));
         mLocationCallback = new LocationCallback(){
             @Override
             public void onLocationAvailability(LocationAvailability locationAvailability){
@@ -137,14 +137,14 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     String key = ref.push().getKey();
-                    DatabaseItem additem = new DatabaseItem(my_attri, ori_lat, ori_lng,
-                            Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
-                            Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
                     /*
                     DatabaseItem additem = new DatabaseItem(my_attri, ori_lat, ori_lng,
                             Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
-                            Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)));
+                            Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
                     */
+                    DatabaseItem additem = new DatabaseItem(my_attri, ori_lat, ori_lng,
+                            Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
+                            Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)));
                     ref.child(key).setValue(additem);
 
                     Log.d("MAIN", "Added Item to Database.");
@@ -397,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onNotiButtonClicked(View view){
         String key = ref.push().getKey();
-        DatabaseItem additem = new DatabaseItem(my_attri, 0.1, 0.1,
+        DatabaseItem additem = new DatabaseItem(1, 22.27319, 114.12867,
                 Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
                 Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
         ref.child(key).setValue(additem);

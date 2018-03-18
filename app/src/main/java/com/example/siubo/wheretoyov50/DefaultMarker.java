@@ -28,7 +28,7 @@ public class DefaultMarker extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        ref = FirebaseDatabase.getInstance().getReference("haha");
+        ref = FirebaseDatabase.getInstance().getReference(getString(R.string.database));
 
         try {
             FileInputStream fin = openFileInput(NOTI_FILENAME);

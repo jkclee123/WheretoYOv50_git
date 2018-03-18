@@ -8,10 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -19,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Calendar;
 
 /**
  * Created by SiuBo on 04-Mar-18.
@@ -29,6 +36,7 @@ public class ModifyMarker extends AppCompatActivity{
     protected DatabaseReference ref;
     protected String key;
     protected int my_attri;
+    protected String gethour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,7 @@ public class ModifyMarker extends AppCompatActivity{
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(1);
         my_attri = 0;
-        ref = FirebaseDatabase.getInstance().getReference("haha");
+        ref = FirebaseDatabase.getInstance().getReference(getString(R.string.database));
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
@@ -45,6 +53,28 @@ public class ModifyMarker extends AppCompatActivity{
             @Override
             public void onClick(View v){
                 finish();
+            }
+        });
+        try {
+            FileInputStream fin = openFileInput(NOTI_FILENAME);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
+            key = bufferedReader.readLine();
+            fin.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (ds.getKey().equals(key)){
+                        gethour = ((String) ds.child("hour").getValue());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
@@ -97,15 +127,12 @@ public class ModifyMarker extends AppCompatActivity{
             Toast.makeText(this, "Modify attributes before submit.", Toast.LENGTH_SHORT).show();
             return;
         }
-        try {
-            FileInputStream fin = openFileInput(NOTI_FILENAME);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
-            key = bufferedReader.readLine();
-            fin.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         ref.child(key).child("attri").setValue(my_attri);
+        EditText editText = findViewById(R.id.editText);
+        if (editText.getText().toString() != ""){
+            gethour += ":" + editText.getText().toString();
+            ref.child(key).child("hour").setValue(gethour);
+        }
         FileOutputStream fos;
         String newline = "\n";
         try {

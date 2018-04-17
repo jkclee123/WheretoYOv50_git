@@ -12,6 +12,7 @@ public class MyItem implements ClusterItem {
     private String mTitle;
     private String mSnippet;
     private String mComment;
+    private int is_private;
 
     public MyItem(LatLng latlng) {
         mPosition = latlng;
@@ -25,10 +26,11 @@ public class MyItem implements ClusterItem {
         mSnippet = "";
     }
 
-    public MyItem(double lat, double lng, String hour, String lastseen) {
+    public MyItem(double lat, double lng, String hour, String lastseen, int is_private) {
         mPosition = new LatLng(lat, lng);
         mTitle = hour;
         mSnippet = lastseen;
+        this.is_private = is_private;
     }
 
     public MyItem(double lat, double lng, String hour, String lastseen, String comment) {
@@ -58,4 +60,6 @@ public class MyItem implements ClusterItem {
     public String getSnippet() {
         return mSnippet;
     }
+
+    public int getIs_private() { return is_private; }
 }

@@ -26,7 +26,7 @@ import java.io.IOException;
 
 public class Settings extends AppCompatActivity {
     protected int PLACE_PICKER_REQUEST = 1;
-    protected int my_attri;
+    protected int my_attri, is_private;
     protected String FILENAME = "user_info";
     protected String HOME_FILENAME = "home_info";
     protected double home_lat;
@@ -42,6 +42,7 @@ public class Settings extends AppCompatActivity {
         my_attri = intent.getExtras().getInt("MY_ATTRI");
         home_lat = intent.getExtras().getDouble("HOME_LAT");
         home_lng = intent.getExtras().getDouble("HOME_LNG");
+        is_private = intent.getExtras().getInt("IS_PRIVATE");
         if ((my_attri & 1) == 1)
             ((CheckBox) findViewById(R.id.mycheckBox0)).setChecked(true);
         if ((my_attri & 2) == 2)
@@ -60,6 +61,8 @@ public class Settings extends AppCompatActivity {
             ((CheckBox) findViewById(R.id.mycheckBox7)).setChecked(true);
         if ((my_attri & 256) == 256)
             ((CheckBox) findViewById(R.id.mycheckBox8)).setChecked(true);
+        if (is_private == 1)
+            ((CheckBox) findViewById(R.id.is_private)).setChecked(true);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -149,6 +152,8 @@ public class Settings extends AppCompatActivity {
             fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
             fos.write(Integer.toString(my_attri).getBytes());
             fos.write(newline.getBytes());
+            fos.write(Integer.toString(is_private).getBytes());
+            fos.write(newline.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -158,9 +163,18 @@ public class Settings extends AppCompatActivity {
         Log.d("MAIN", "Info Saved");
         Log.d("MAIN", "Home Lat: " + Double.toString(home_lat));
         Log.d("MAIN", "Home Lng: " + Double.toString(home_lng));
-        Log.d("MAIN", "iamgender: " + Integer.toString(my_attri));
+        Log.d("MAIN", "my_attri: " + Integer.toString(my_attri));
+        Log.d("MAIN", "is_private: " + Integer.toString(is_private));
         Toast.makeText(this, "We will not disclose your personal information.", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    public void privateClick(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+        if (checked == true)
+            is_private = 1;
+        else
+            is_private = 0;
     }
 }
 

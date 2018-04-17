@@ -53,10 +53,13 @@ import java.io.InputStreamReader;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Random;
 import java.util.TimeZone;
 
+import static java.lang.Math.sqrt;
+
 public class MainActivity extends AppCompatActivity {
-    protected static int my_attri, attri;
+    protected static int my_attri, attri, is_private;
     protected String FILENAME = "user_info";
     protected String HOME_FILENAME = "home_info";
     protected String NOTI_FILENAME = "noti_file";
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     protected LocationRequest mLocationRequest;
     protected LocationCallback mLocationCallback;
     protected DatabaseReference ref;
-    protected double home_lat, home_lng, ori_lat, ori_lng;
+    protected double home_lat, home_lng, ori_lat, ori_lng, push_lat, push_lng;
     protected int first_stayed, stayed;
     protected Context mContext;
     protected String file_key;
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         my_attri = 0;
         home_lat = 0.0;
         home_lng = 0.0;
+        is_private = 0;
         first_stayed = 1500;
         start = 0;
         mContext = this;
@@ -99,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onLocationResult(LocationResult locationResult){
-                //if (start == 1)
-                //    return;
                 if (my_attri == 2) {
                     Log.d("MAIN", "my_attri Not Init.");
                     return;
@@ -136,24 +138,34 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
+                    if (is_private == 1){
+                        Random r = new Random();
+                        double randomLatDiff = -0.00049 + (0.00049 + 0.00049) * r.nextDouble();
+                        double limit = (1 - randomLatDiff * randomLatDiff / 0.0000002401) * 0.0000002025;
+                        limit = sqrt(limit);
+                        double randomLngDiff = limit * -1 + (limit * 2) * r.nextDouble();
+                        push_lat = ori_lat + randomLatDiff;
+                        push_lng = ori_lng + randomLngDiff;
+                    }
+                    else{
+                        push_lat = ori_lat;
+                        push_lng = ori_lng;
+                    }
+
                     String key = ref.push().getKey();
-                    /*
-                    DatabaseItem additem = new DatabaseItem(my_attri, ori_lat, ori_lng,
+                    DatabaseItem additem = new DatabaseItem(my_attri, push_lat, push_lng,
                             Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
-                            Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
-                    */
-                    DatabaseItem additem = new DatabaseItem(my_attri, ori_lat, ori_lng,
-                            Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
-                            Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)));
+                            Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)), is_private);
                     ref.child(key).setValue(additem);
 
                     Log.d("MAIN", "Added Item to Database.");
                     Log.d("MAIN", "Key: " + key);
                     Log.d("MAIN", "my_attri: " + Integer.toString(my_attri));
-                    Log.d("MAIN", "Lat: " + Double.toString(ori_lat));
-                    Log.d("MAIN", "Lng: " + Double.toString(ori_lng));
+                    Log.d("MAIN", "Lat: " + Double.toString(push_lat));
+                    Log.d("MAIN", "Lng: " + Double.toString(push_lng));
                     Log.d("MAIN", "Stayed: " + Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60));
                     Log.d("MAIN", "Lastseen: " + Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+                    Log.d("MAIN", "is_private: " + Integer.toString(is_private));
                     ori_lat = location.getLatitude();
                     ori_lng = location.getLongitude();
                     first_stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE);
@@ -264,6 +276,8 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; (line = bufferedReader.readLine()) != null; i++){
                 if (i == 0)
                     my_attri = Integer.parseInt(line);
+                if (i == 1)
+                    is_private = Integer.parseInt(line);
             }
             fin.close();
         } catch (IOException e) {
@@ -390,6 +404,7 @@ public class MainActivity extends AppCompatActivity {
     public void onSettingsButtonClicked(View view){
         Intent intent = new Intent(this, com.example.siubo.wheretoyov50.Settings.class);
         intent.putExtra("MY_ATTRI", my_attri);
+        intent.putExtra("IS_PRIVATE", is_private);
         intent.putExtra("HOME_LAT", home_lat);
         intent.putExtra("HOME_LNG", home_lng);
         startActivity(intent);
@@ -399,7 +414,7 @@ public class MainActivity extends AppCompatActivity {
         String key = ref.push().getKey();
         DatabaseItem additem = new DatabaseItem(1, 22.27319, 114.12867,
                 Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
-                Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+                Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)), is_private);
         ref.child(key).setValue(additem);
 
         Log.d("MAIN", "Added Item to Database.");

@@ -33,11 +33,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected GoogleMap mMap;
     protected int attri;
     protected ClusterManager<MyItem> mClusterManager;
-    protected DefaultClusterRenderer<MyItem> mDefaultClusterRenderer;
+    protected CustomClusterRenderer renderer;
     protected DatabaseReference ref;
     protected String lastseen, stayed_title, diff_snippet;
     public int is_private;
     protected double push_lat, push_lng;
+    protected MyItem marker;
 
     public GoogleMap getMap() {
         return mMap;
@@ -72,6 +73,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mClusterManager = new ClusterManager<MyItem>(this, getMap());
         getMap().setOnCameraIdleListener(mClusterManager);
         getMap().setOnMarkerClickListener(mClusterManager);
+        renderer = new CustomClusterRenderer(this, mMap, mClusterManager);
+        mClusterManager.setRenderer(renderer);
         ref = FirebaseDatabase.getInstance().getReference(getString(R.string.database));
         Log.d("MAIN", "Looking For attri = " + Integer.toString(attri) + " Markers.");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -109,8 +112,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         diff_snippet = Integer.toString(diff / 7) + " weeks ago";
                     String[] stayed_time = ((String) ds.child("hour").getValue()).split(":", -1);
                     stayed_title = "Stayed " + stayed_time[0] + "hr " + stayed_time[1] + "min";
-                    MyItem marker = new MyItem( push_lat, push_lng, stayed_title, diff_snippet, (int) ds.child("is_private").getValue());
+                    marker = new MyItem(push_lat, push_lng, stayed_title, diff_snippet, (int) ds.child("is_private").getValue());
                     mClusterManager.addItem(marker);
+                    if (is_private == 1) {
+                        marker = new MyItem((double) ds.child("lat").getValue(), (double) ds.child("lng").getValue(), stayed_title, diff_snippet, 0);
+                        mClusterManager.addItem(marker);
+                    }
                 }
                 getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(22.3964, 114.1095), 10));
             }

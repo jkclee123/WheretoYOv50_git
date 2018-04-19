@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">Where to YO v5.0</string>
+    <string name="app_name">Where to YO</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_settings">Settings</string>
     <string name="title_activity_welcome">Home Screen</string>
+    <string name="title_tutorial">Help</string>
+    <string name="title_web">Search</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>

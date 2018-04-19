@@ -8,16 +8,19 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class web extends AppCompatActivity {
 
     private WebView webView;
+    ProgressBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+        bar= (ProgressBar)findViewById(R.id.progressBar2);
 
         String url = "www.google.com";
         Log.d("d", url);
@@ -68,7 +71,9 @@ public class web extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url){
                 super.onPageFinished(webView, url);
+                bar.setVisibility(View.GONE);
                 webView.setVisibility(View.VISIBLE);
+                Log.d("MAIN", "Loaded");
             }
         });
         webView.getSettings().setJavaScriptEnabled(true);

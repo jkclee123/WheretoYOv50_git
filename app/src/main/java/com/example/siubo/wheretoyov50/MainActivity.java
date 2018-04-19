@@ -21,6 +21,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     protected String file_key;
     protected int start;
     private PrefManager prefManager;
+    protected int s1, s2, s3, s4, s5, s6, s7, s8, s9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MAIN", "Main onResume.");
 
         attri = 0;
-        ((CheckBox) findViewById(R.id.checkBox0)).setChecked(false);
+        /*((CheckBox) findViewById(R.id.checkBox0)).setChecked(false);
         ((CheckBox) findViewById(R.id.checkBox1)).setChecked(false);
         ((CheckBox) findViewById(R.id.checkBox2)).setChecked(false);
         ((CheckBox) findViewById(R.id.checkBox3)).setChecked(false);
@@ -236,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         ((CheckBox) findViewById(R.id.checkBox5)).setChecked(false);
         ((CheckBox) findViewById(R.id.checkBox6)).setChecked(false);
         ((CheckBox) findViewById(R.id.checkBox7)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox8)).setChecked(false);
+        ((CheckBox) findViewById(R.id.checkBox8)).setChecked(false);*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("MAIN", "Requesting Permission...");
@@ -347,48 +349,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onAttriCheckboxClicked(View view) {
-        boolean checked = ((CheckBox) view).isChecked();
-        switch (view.getId()) {
-            case R.id.checkBox0:
-                if (checked) attri += 1;
-                else attri -= 1;
-                break;
-            case R.id.checkBox1:
-                if (checked) attri += 2;
-                else attri -= 2;
-                break;
-            case R.id.checkBox2:
-                if (checked) attri += 4;
-                else attri -= 4;
-                break;
-            case R.id.checkBox3:
-                if (checked) attri += 8;
-                else attri -= 8;
-                break;
-            case R.id.checkBox4:
-                if (checked) attri += 16;
-                else attri -= 16;
-                break;
-            case R.id.checkBox5:
-                if (checked) attri += 32;
-                else attri -= 32;
-                break;
-            case R.id.checkBox6:
-                if (checked) attri += 64;
-                else attri -= 64;
-                break;
-            case R.id.checkBox7:
-                if (checked) attri += 128;
-                else attri -= 128;
-                break;
-            case R.id.checkBox8:
-                if (checked) attri += 256;
-                else attri -= 256;
-                break;
-        }
-    }
-
     public void onButtonClicked(View view){
         if (my_attri != 0 && attri != 0){
             Intent intent = new Intent(this, MapsActivity.class);
@@ -494,5 +454,104 @@ public class MainActivity extends AppCompatActivity {
 
         return location1.distanceTo(location2);
     }
+
+
+    public void onImageButtonClick(View view){
+        switch(view.getId()){
+            case R.id.imageButton1:
+                Log.d("MAIN", "Button 1 pressed");
+                attri ^= 1;
+                if((attri & 1) == 1){
+                    ((ImageButton) view).setImageResource(R.drawable.hiking_checked);
+                }
+                else{
+                    ((ImageButton) view).setImageResource(R.drawable.hiking);
+                }
+                break;
+            case R.id.imageButton2:
+                Log.d("MAIN", "Button 2 pressed");
+                attri ^= 2;
+                if((attri & 2) == 2){
+                    ((ImageButton) view).setImageResource(R.drawable.shopping_checked);
+                }
+                else{
+                    ((ImageButton) view).setImageResource(R.drawable.shopping);
+                }
+                break;
+            case R.id.imageButton3:
+                Log.d("MAIN", "Button 3 pressed");
+                attri ^= 4;
+                if((attri & 4) == 4){
+                    ((ImageButton) view).setImageResource(R.drawable.sports_checked);
+                }
+                else{
+                    ((ImageButton) view).setImageResource(R.drawable.sports);
+                }
+                break;
+            case R.id.imageButton4:
+                Log.d("MAIN", "Button 4 pressed");
+                attri ^= 8;
+                if((attri & 8) == 8){
+                    ((ImageButton) view).setImageResource(R.drawable.videogames_checked);
+                }
+                else{
+                    ((ImageButton) view).setImageResource(R.drawable.videogames);
+                }
+                break;
+            case R.id.imageButton5:
+                Log.d("MAIN", "Button 5 pressed");
+                attri ^= 16;
+                if((attri & 16) == 16){
+                    ((ImageButton) view).setImageResource(R.drawable.concert_checked);
+                }
+                else{
+                    ((ImageButton) view).setImageResource(R.drawable.concert);
+                }
+                break;
+            case R.id.imageButton6:
+                Log.d("MAIN", "Button 6 pressed");
+                attri ^= 32;
+                if((attri & 32) == 32){
+                    ((ImageButton) view).setImageResource(R.drawable.drama_checked);
+                }
+                else{
+                    ((ImageButton) view).setImageResource(R.drawable.drama);
+                }
+                break;
+            case R.id.imageButton7:
+                Log.d("MAIN", "Button 7 pressed");
+                attri ^= 64;
+                if((attri & 64) == 64){
+                    ((ImageButton) view).setImageResource(R.drawable.band_checked);
+                }
+                else{
+                    ((ImageButton) view).setImageResource(R.drawable.band);
+                }
+                break;
+            case R.id.imageButton8:
+                Log.d("MAIN", "Button 8 pressed");
+                attri ^= 128;
+                if((attri & 128) == 128){
+                    ((ImageButton) view).setImageResource(R.drawable.karaoke_checked);
+                }
+                else{
+                    ((ImageButton) view).setImageResource(R.drawable.karaoke);
+                }
+                break;
+            case R.id.imageButton9:
+                Log.d("MAIN", "Button 9 pressed");
+                attri ^= 256;
+                if((attri & 256) == 256){
+                    ((ImageButton) view).setImageResource(R.drawable.watersports_checked);
+                }
+                else{
+                    ((ImageButton) view).setImageResource(R.drawable.watersports);
+                }
+                break;
+        }
+        Log.d("MAIN", "attri: " + Integer.toString(attri));
+    }
+
+
 
 }

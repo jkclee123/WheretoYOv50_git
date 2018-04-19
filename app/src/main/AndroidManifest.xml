@@ -37,8 +37,12 @@
         <activity android:name=".DeleteMarker" />
         <activity android:name=".ModifyMarker" />
         <activity android:name=".DefaultMarker" />
-        <activity android:name=".Tutorial" />
-        <activity android:name=".web"></activity>
+        <activity
+            android:name=".Tutorial"
+            android:label="@string/title_tutorial"/>
+        <activity
+            android:name=".web"
+            android:label="@string/title_web"/>
     </application>
 
 </manifest>

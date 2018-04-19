@@ -230,6 +230,15 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MAIN", "Main onResume.");
 
         attri = 0;
+        ((ImageButton)findViewById(R.id.imageButton1)).setImageResource(R.drawable.hiking);
+        ((ImageButton)findViewById(R.id.imageButton2)).setImageResource(R.drawable.shopping);
+        ((ImageButton)findViewById(R.id.imageButton3)).setImageResource(R.drawable.sports);
+        ((ImageButton)findViewById(R.id.imageButton4)).setImageResource(R.drawable.videogames);
+        ((ImageButton)findViewById(R.id.imageButton5)).setImageResource(R.drawable.concert);
+        ((ImageButton)findViewById(R.id.imageButton6)).setImageResource(R.drawable.drama);
+        ((ImageButton)findViewById(R.id.imageButton7)).setImageResource(R.drawable.band);
+        ((ImageButton)findViewById(R.id.imageButton8)).setImageResource(R.drawable.karaoke);
+        ((ImageButton)findViewById(R.id.imageButton9)).setImageResource(R.drawable.watersports);
         /*((CheckBox) findViewById(R.id.checkBox0)).setChecked(false);
         ((CheckBox) findViewById(R.id.checkBox1)).setChecked(false);
         ((CheckBox) findViewById(R.id.checkBox2)).setChecked(false);

@@ -21,7 +21,7 @@ public class web extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         bar= (ProgressBar)findViewById(R.id.progressBar2);
-
+        bar.setVisibility(View.INVISIBLE);
         String url = "www.google.com";
         Log.d("d", url);
         findViewById(R.id.button8).setOnClickListener(new View.OnClickListener() {
@@ -65,13 +65,14 @@ public class web extends AppCompatActivity {
 
     public void load(String url){
         webView = (WebView) findViewById(R.id.web1);
+        bar.setVisibility(View.VISIBLE);
         webView.setVisibility(View.INVISIBLE);
         Toast.makeText(this, "Page Loading...", Toast.LENGTH_SHORT);
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url){
                 super.onPageFinished(webView, url);
-                bar.setVisibility(View.GONE);
+                bar.setVisibility(View.INVISIBLE);
                 webView.setVisibility(View.VISIBLE);
                 Log.d("MAIN", "Loaded");
             }

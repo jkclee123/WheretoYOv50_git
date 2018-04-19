@@ -80,40 +80,31 @@ public class Settings extends AppCompatActivity {
         boolean checked = ((CheckBox) view).isChecked();
         switch (view.getId()) {
             case R.id.mycheckBox0:
-                if (checked) my_attri += 1;
-                else my_attri -= 1;
+                my_attri ^= 1;
                 break;
             case R.id.mycheckBox1:
-                if (checked) my_attri += 2;
-                else my_attri -= 2;
+                my_attri ^= 2;
                 break;
             case R.id.mycheckBox2:
-                if (checked) my_attri += 4;
-                else my_attri -= 4;
+                my_attri ^= 4;
                 break;
             case R.id.mycheckBox3:
-                if (checked) my_attri += 8;
-                else my_attri -= 8;
+                my_attri ^= 8;
                 break;
             case R.id.mycheckBox4:
-                if (checked) my_attri += 16;
-                else my_attri -= 16;
+                my_attri ^= 16;
                 break;
             case R.id.mycheckBox5:
-                if (checked) my_attri += 32;
-                else my_attri -= 32;
+                my_attri ^= 32;
                 break;
             case R.id.mycheckBox6:
-                if (checked) my_attri += 64;
-                else my_attri -= 64;
+                my_attri ^= 64;
                 break;
             case R.id.mycheckBox7:
-                if (checked) my_attri += 128;
-                else my_attri -= 128;
+                my_attri ^= 128;
                 break;
             case R.id.mycheckBox8:
-                if (checked) my_attri += 256;
-                else my_attri -= 256;
+                my_attri ^= 256;
                 break;
         }
         Log.d("MAIN", Integer.toString(my_attri));

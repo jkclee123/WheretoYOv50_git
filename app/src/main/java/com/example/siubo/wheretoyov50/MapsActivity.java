@@ -142,13 +142,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.d("MAIN", "is_private: " + Integer.toString(is_private) + "\nitem.getIs_private: " + Long.toString(item.getIs_private()));
             if (is_private == 1){
                 if (item.getIs_private() == 1)
-                     markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN);
+                     markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW);
                 else
-                    markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE);
+                    markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
             }
             else{
                 if (item.getIs_private() == 1)
-                    markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE);
+                    markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
                 else
                     markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
             }

@@ -112,7 +112,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         diff_snippet = Integer.toString(diff / 7) + " weeks ago";
                     String[] stayed_time = ((String) ds.child("hour").getValue()).split(":", -1);
                     stayed_title = "Stayed " + stayed_time[0] + "hr " + stayed_time[1] + "min";
-                    marker = new MyItem(push_lat, push_lng, stayed_title, diff_snippet, (int) ds.child("is_private").getValue());
+                    marker = new MyItem(push_lat, push_lng, stayed_title, diff_snippet, (long) ds.child("is_private").getValue());
                     mClusterManager.addItem(marker);
                     if (is_private == 1) {
                         marker = new MyItem((double) ds.child("lat").getValue(), (double) ds.child("lng").getValue(), stayed_title, diff_snippet, 0);
@@ -138,6 +138,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         @Override protected void onBeforeClusterItemRendered(MyItem item, MarkerOptions markerOptions) {
             final BitmapDescriptor markerDescriptor;
+
             if (is_private == 1){
                 if (item.getIs_private() == 1)
                      markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN);

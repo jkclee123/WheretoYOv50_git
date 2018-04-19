@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.SpinnerAdapter;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -62,7 +63,7 @@ public class Settings extends AppCompatActivity {
         if ((my_attri & 256) == 256)
             ((CheckBox) findViewById(R.id.mycheckBox8)).setChecked(true);
         if (is_private == 1)
-            ((CheckBox) findViewById(R.id.is_private)).setChecked(true);
+            ((Switch) findViewById(R.id.switch1)).setChecked(true);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -169,12 +170,15 @@ public class Settings extends AppCompatActivity {
         finish();
     }
 
-    public void privateClick(View view) {
-        boolean checked = ((CheckBox) view).isChecked();
-        if (checked == true)
+
+
+    public void onSwitchClicked(View view){
+        boolean checked = ((Switch)view).isChecked();
+        if (checked)
             is_private = 1;
         else
             is_private = 0;
+        Log.d("MAIN", "is_private=" + Integer.toString(is_private));
     }
 }
 

@@ -392,6 +392,7 @@ public class MainActivity extends AppCompatActivity {
     public void onButtonClicked(View view){
         if (my_attri != 0 && attri != 0){
             Intent intent = new Intent(this, MapsActivity.class);
+            intent.putExtra("IS_PRIVATE", is_private);
             intent.putExtra("ATTRI", attri);
             startActivity(intent);
         }
@@ -408,6 +409,16 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("HOME_LAT", home_lat);
         intent.putExtra("HOME_LNG", home_lng);
         startActivity(intent);
+    }
+
+    public void TutorClick(View view) {
+        Intent tutorIntent = new Intent(this, Tutorial.class);
+        startActivity(tutorIntent);
+    }
+
+    public void WebClick(View view){
+        Intent webIntent = new Intent(this, web.class);
+        startActivity(webIntent);
     }
 
     public void onNotiButtonClicked(View view){

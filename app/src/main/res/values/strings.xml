@@ -23,5 +23,6 @@
     <string name="play_again">Play Again</string>
 
     <string name="database">private_demo</string>
+    <string name="title_activity_web">web</string>
 
 </resources>

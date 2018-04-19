@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:textColor="@android:color/white"
         android:text="Tell us what you like:"
         android:textSize="19sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"
         android:onClick="onMyAttriCheckboxClicked"
         android:text="Hiking"
         android:textSize="16sp"
@@ -44,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"
         android:text="Shopping"
         android:textSize="16sp"
         android:onClick="onMyAttriCheckboxClicked"
@@ -57,6 +60,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:onClick="onMyAttriCheckboxClicked"
+        android:textColor="@android:color/white"
         android:text="Sports"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/mycheckBox1"
@@ -69,6 +73,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="12dp"
         android:onClick="onMyAttriCheckboxClicked"
+        android:textColor="@android:color/white"
         android:text="Video Gaming"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,6 +87,7 @@
         android:layout_marginTop="12dp"
         android:text="Concert"
         android:textSize="16sp"
+        android:textColor="@android:color/white"
         android:onClick="onMyAttriCheckboxClicked"
         app:layout_constraintStart_toEndOf="@+id/mycheckBox3"
         app:layout_constraintTop_toBottomOf="@+id/mycheckBox1" />
@@ -94,6 +100,7 @@
         android:layout_marginTop="12dp"
         android:text="Drama"
         android:textSize="16sp"
+        android:textColor="@android:color/white"
         android:onClick="onMyAttriCheckboxClicked"
         app:layout_constraintStart_toEndOf="@+id/mycheckBox4"
         app:layout_constraintTop_toBottomOf="@+id/mycheckBox2" />
@@ -104,6 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="12dp"
+        android:textColor="@android:color/white"
         android:onClick="onMyAttriCheckboxClicked"
         android:text="Band Show"
         android:textSize="16sp"
@@ -116,6 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
+        android:textColor="@android:color/white"
         android:text="Karaoke"
         android:textSize="16sp"
         android:onClick="onMyAttriCheckboxClicked"
@@ -129,6 +138,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:text="Water Sports"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
         android:onClick="onMyAttriCheckboxClicked"
         app:layout_constraintStart_toEndOf="@+id/mycheckBox7"
@@ -156,15 +166,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mycheckBox6" />
 
-    <CheckBox
-        android:id="@+id/is_private"
-        android:layout_width="87dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="36dp"
-        android:text="Private"
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onSwitchClicked"
+        android:text="Add noise to my location"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/mycheckBox8"
-        android:onClick="privateClick"/>
+        app:layout_constraintTop_toBottomOf="@+id/mycheckBox8" />
 
 </android.support.constraint.ConstraintLayout>

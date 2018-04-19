@@ -51,6 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         Intent intent = getIntent();
         attri = intent.getExtras().getInt("ATTRI");
+        is_private = intent.getExtras().getInt("ATTRI");
         is_private = intent.getExtras().getInt("IS_PRIVATE");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -112,7 +113,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         diff_snippet = Integer.toString(diff / 7) + " weeks ago";
                     String[] stayed_time = ((String) ds.child("hour").getValue()).split(":", -1);
                     stayed_title = "Stayed " + stayed_time[0] + "hr " + stayed_time[1] + "min";
-                    marker = new MyItem(push_lat, push_lng, stayed_title, diff_snippet, (int) ds.child("is_private").getValue());
+                    marker = new MyItem(push_lat, push_lng, stayed_title, diff_snippet, (long) ds.child("is_private").getValue());
                     mClusterManager.addItem(marker);
                     if (is_private == 1) {
                         marker = new MyItem((double) ds.child("lat").getValue(), (double) ds.child("lng").getValue(), stayed_title, diff_snippet, 0);
@@ -138,6 +139,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         @Override protected void onBeforeClusterItemRendered(MyItem item, MarkerOptions markerOptions) {
             final BitmapDescriptor markerDescriptor;
+            Log.d("MAIN", "is_private: " + Integer.toString(is_private) + "\nitem.getIs_private: " + Long.toString(item.getIs_private()));
             if (is_private == 1){
                 if (item.getIs_private() == 1)
                      markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN);
@@ -150,6 +152,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 else
                     markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
             }
+            markerOptions.icon(markerDescriptor);
         }
     }
 }

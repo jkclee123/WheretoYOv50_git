@@ -45,7 +45,7 @@ public class web extends AppCompatActivity {
         findViewById(R.id.button10).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = "http://www.umagazine.com.hk";
+                String url = "http://www.ulifestyle.com.hk";
                 Log.d("d", url);
                 load(url);
             }

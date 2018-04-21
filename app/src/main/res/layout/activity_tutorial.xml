@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/bg1"
     tools:context="com.example.siubo.wheretoyov50.Tutorial">
 
     <android.support.v7.widget.Toolbar
@@ -32,15 +32,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Settings\n"
-                android:textColor="@android:color/white"
                 android:textSize="@dimen/large_font" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1. Select your hobbies\n"
-                android:textColor="@android:color/white" />
+                android:text="1. Select your hobbies\n" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -54,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="\n2. Select your home location to prevent the app from sending your home location to the database\n"
-                android:textColor="@android:color/white" />
+                />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -68,15 +66,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="\n\n\nMain Page"
-                android:textColor="@android:color/white"
                 android:textSize="@dimen/large_font" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\n1. Choose the activities from the list of hobbies which you want to view on the map\n"
-                android:textColor="@android:color/white" />
+                android:text="\n1. Choose the activities from the list of hobbies which you want to view on the map\n" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -90,7 +86,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="\n\n\nMap Page\n"
-                android:textColor="@android:color/white"
                 android:textSize="@dimen/large_font" />
 
             <ImageView
@@ -104,22 +99,19 @@
                 android:id="@+id/textView12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\n1. Location markers will show where other users have been to for the selected categories\n"
-                android:textColor="@android:color/white" />
+                android:text="\n1. Location markers will show where other users have been to for the selected categories\n"/>
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2. Click on the marker for additional information\n"
-                android:textColor="@android:color/white" />
+                android:text="2. Click on the marker for additional information\n"/>
 
             <TextView
                 android:id="@+id/textView14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3. Click on the Google Map logo to search for places of interest\n"
-                android:textColor="@android:color/white" />
+                android:text="3. Click on the Google Map logo to search for places of interest\n"/>
         </LinearLayout>
 
     </ScrollView>

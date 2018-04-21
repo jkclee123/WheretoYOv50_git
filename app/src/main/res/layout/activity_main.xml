@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null"
+    android:background="@drawable/bg1"
 
 
     tools:context="com.example.siubo.wheretoyov50.MainActivity">
@@ -18,6 +18,19 @@
         app:titleTextColor="@color/common_google_signin_btn_text_dark_default" />
 
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="What do you want to do today?"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
     <ImageButton
         android:id="@+id/imageButton1"
         android:layout_width="wrap_content"
@@ -27,7 +40,7 @@
         android:background="@null"
         android:onClick="onImageButtonClick"
         app:layout_constraintEnd_toStartOf="@+id/imageButton2"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:srcCompat="@drawable/hiking" />
 
     <ImageButton
@@ -41,7 +54,7 @@
         android:onClick="onImageButtonClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:srcCompat="@drawable/shopping" />
 
     <ImageButton
@@ -53,7 +66,7 @@
         android:background="@null"
         android:onClick="onImageButtonClick"
         app:layout_constraintStart_toEndOf="@+id/imageButton2"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:srcCompat="@drawable/sports" />
 
     <ImageButton
@@ -140,6 +153,7 @@
         android:layout_marginTop="16dp"
         android:onClick="onSettingsButtonClicked"
         android:text="Settings"
+        android:background="@drawable/my_button_bg"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/imageButton7" />
 
@@ -152,6 +166,7 @@
         android:layout_marginTop="16dp"
         android:onClick="onButtonClicked"
         android:text="Go To Map"
+        android:background="@drawable/my_button_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton8" />
@@ -164,15 +179,17 @@
         android:layout_marginTop="16dp"
         android:onClick="WebClick"
         android:text="Web"
+        android:background="@drawable/my_button_bg"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/imageButton9" />
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="wrap_content"
+        android:layout_width="146dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/my_button_bg"
         android:onClick="onNotiButtonClicked"
         android:text="NOTIFICATION"
         app:layout_constraintStart_toStartOf="parent"
@@ -180,14 +197,14 @@
 
     <Button
         android:id="@+id/button7"
-        android:layout_width="wrap_content"
+        android:layout_width="149dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/my_button_bg"
         android:onClick="TutorClick"
         android:text="Tutorial"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/bg1"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.siubo.wheretoyov50.ModifyMarker">
 
@@ -131,6 +131,7 @@
         android:layout_marginTop="16dp"
         android:onClick="onModifyButtonPressed"
         android:text="Modify"
+        android:background="@drawable/my_button_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 

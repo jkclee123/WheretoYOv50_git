@@ -239,15 +239,6 @@ public class MainActivity extends AppCompatActivity {
         ((ImageButton)findViewById(R.id.imageButton7)).setImageResource(R.drawable.band);
         ((ImageButton)findViewById(R.id.imageButton8)).setImageResource(R.drawable.karaoke);
         ((ImageButton)findViewById(R.id.imageButton9)).setImageResource(R.drawable.watersports);
-        /*((CheckBox) findViewById(R.id.checkBox0)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox1)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox2)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox3)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox4)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox5)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox6)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox7)).setChecked(false);
-        ((CheckBox) findViewById(R.id.checkBox8)).setChecked(false);*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("MAIN", "Requesting Permission...");
@@ -470,92 +461,74 @@ public class MainActivity extends AppCompatActivity {
             case R.id.imageButton1:
                 Log.d("MAIN", "Button 1 pressed");
                 attri ^= 1;
-                if((attri & 1) == 1){
-                    ((ImageButton) view).setImageResource(R.drawable.hiking_checked);
-                }
-                else{
-                    ((ImageButton) view).setImageResource(R.drawable.hiking);
-                }
+                if((attri & 1) == 1)
+                    ( (ImageButton) view).setImageResource(R.drawable.hiking_checked);
+                else
+                    ( (ImageButton) view).setImageResource(R.drawable.hiking);
                 break;
             case R.id.imageButton2:
                 Log.d("MAIN", "Button 2 pressed");
                 attri ^= 2;
-                if((attri & 2) == 2){
-                    ((ImageButton) view).setImageResource(R.drawable.shopping_checked);
-                }
-                else{
-                    ((ImageButton) view).setImageResource(R.drawable.shopping);
-                }
+                if((attri & 2) == 2)
+                    ( (ImageButton) view).setImageResource(R.drawable.shopping_checked);
+                else
+                    ( (ImageButton) view).setImageResource(R.drawable.shopping);
                 break;
             case R.id.imageButton3:
                 Log.d("MAIN", "Button 3 pressed");
                 attri ^= 4;
-                if((attri & 4) == 4){
-                    ((ImageButton) view).setImageResource(R.drawable.sports_checked);
-                }
-                else{
-                    ((ImageButton) view).setImageResource(R.drawable.sports);
-                }
+                if((attri & 4) == 4)
+                    ( (ImageButton) view).setImageResource(R.drawable.sports_checked);
+                else
+                    ( (ImageButton) view).setImageResource(R.drawable.sports);
                 break;
             case R.id.imageButton4:
                 Log.d("MAIN", "Button 4 pressed");
                 attri ^= 8;
-                if((attri & 8) == 8){
-                    ((ImageButton) view).setImageResource(R.drawable.videogames_checked);
-                }
-                else{
-                    ((ImageButton) view).setImageResource(R.drawable.videogames);
-                }
+                if((attri & 8) == 8)
+                    ( (ImageButton) view).setImageResource(R.drawable.videogames_checked);
+                else
+                    ( (ImageButton) view).setImageResource(R.drawable.videogames);
                 break;
             case R.id.imageButton5:
                 Log.d("MAIN", "Button 5 pressed");
                 attri ^= 16;
-                if((attri & 16) == 16){
-                    ((ImageButton) view).setImageResource(R.drawable.concert_checked);
-                }
-                else{
-                    ((ImageButton) view).setImageResource(R.drawable.concert);
-                }
+                if((attri & 16) == 16)
+                    ( (ImageButton) view).setImageResource(R.drawable.concert_checked);
+                else
+                    ( (ImageButton) view).setImageResource(R.drawable.concert);
                 break;
             case R.id.imageButton6:
                 Log.d("MAIN", "Button 6 pressed");
                 attri ^= 32;
-                if((attri & 32) == 32){
-                    ((ImageButton) view).setImageResource(R.drawable.drama_checked);
-                }
-                else{
-                    ((ImageButton) view).setImageResource(R.drawable.drama);
-                }
+                if((attri & 32) == 32)
+                    ( (ImageButton) view).setImageResource(R.drawable.drama_checked);
+                else
+                    ( (ImageButton) view).setImageResource(R.drawable.drama);
                 break;
             case R.id.imageButton7:
                 Log.d("MAIN", "Button 7 pressed");
                 attri ^= 64;
-                if((attri & 64) == 64){
-                    ((ImageButton) view).setImageResource(R.drawable.band_checked);
-                }
-                else{
-                    ((ImageButton) view).setImageResource(R.drawable.band);
-                }
+                if((attri & 64) == 64)
+                    ( (ImageButton) view).setImageResource(R.drawable.band_checked);
+                else
+                    ( (ImageButton) view).setImageResource(R.drawable.band);
                 break;
             case R.id.imageButton8:
                 Log.d("MAIN", "Button 8 pressed");
                 attri ^= 128;
-                if((attri & 128) == 128){
-                    ((ImageButton) view).setImageResource(R.drawable.karaoke_checked);
-                }
-                else{
-                    ((ImageButton) view).setImageResource(R.drawable.karaoke);
-                }
+                if((attri & 128) == 128)
+                    ( (ImageButton) view).setImageResource(R.drawable.karaoke_checked);
+                else
+                    ( (ImageButton) view).setImageResource(R.drawable.karaoke);
                 break;
             case R.id.imageButton9:
                 Log.d("MAIN", "Button 9 pressed");
                 attri ^= 256;
-                if((attri & 256) == 256){
-                    ((ImageButton) view).setImageResource(R.drawable.watersports_checked);
-                }
-                else{
-                    ((ImageButton) view).setImageResource(R.drawable.watersports);
-                }
+                if((attri & 256) == 256)
+                    ( (ImageButton) view).setImageResource(R.drawable.watersports_checked);
+                else
+                    ( (ImageButton) view).setImageResource(R.drawable.watersports);
                 break;
         }
         Log.d("MAIN", "attri: " + Integer.toString(attri));

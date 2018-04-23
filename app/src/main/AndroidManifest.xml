@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -39,10 +40,22 @@
         <activity android:name=".DefaultMarker" />
         <activity
             android:name=".Tutorial"
-            android:label="@string/title_tutorial"/>
+            android:label="@string/title_tutorial" />
         <activity
             android:name=".web"
-            android:label="@string/title_web"/>
+            android:label="@string/title_web" />
+        <activity
+            android:name=".t_settings"
+            android:label="Help - Settings Page"/>
+        <activity
+            android:name=".t_main"
+            android:label="Help - Main Page"/>
+        <activity
+            android:name=".t_map"
+            android:label="Help - Map Page"/>
+        <activity
+            android:name=".t_web"
+            android:label="Help - Search Page"/>
     </application>
 
 </manifest>

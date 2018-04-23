@@ -1,5 +1,6 @@
 package com.example.siubo.wheretoyov50;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,5 +23,25 @@ public class Tutorial extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void SettingsClick(View view) {
+        Intent settingIntent = new Intent(this, t_settings.class);
+        startActivity(settingIntent);
+    }
+
+    public void MainClick(View view) {
+        Intent mainIntent = new Intent(this, t_main.class);
+        startActivity(mainIntent);
+    }
+
+    public void MapClick(View view) {
+        Intent mapIntent = new Intent(this, t_map.class);
+        startActivity(mapIntent);
+    }
+
+    public void SearchClick(View view) {
+        Intent searchIntent = new Intent(this, t_web.class);
+        startActivity(searchIntent);
     }
 }

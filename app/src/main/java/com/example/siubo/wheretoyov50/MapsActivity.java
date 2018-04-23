@@ -87,13 +87,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if ((getattri | attri) != attri)
                         continue;
                     if (is_private == 1) {
-                        Random r = new Random();
-                        double randomLatDiff = -0.00049 + (0.00049 + 0.00049) * r.nextDouble();
-                        double limit = (1 - randomLatDiff * randomLatDiff / 0.0000002401) * 0.0000002025;
-                        limit = sqrt(limit);
-                        double randomLngDiff = limit * -1 + (limit * 2) * r.nextDouble();
-                        push_lat = (double) ds.child("lat").getValue() + randomLatDiff;
-                        push_lng = (double) ds.child("lng").getValue() + randomLngDiff;
+                        addNoise((double) ds.child("lat").getValue(), (double) ds.child("lng").getValue());
                     }
                     else{
                         push_lat = (double) ds.child("lat").getValue();
@@ -123,6 +117,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    private void addNoise(double ori_lat, double ori_lng) {
+        Random r = new Random();
+        double randomLatDiff = -0.001945 + 0.001945 * 2 * r.nextDouble();
+        double limit = (1 - randomLatDiff * randomLatDiff / 0.001945 / 0.001945) * 0.0018 * 0.0018;
+        limit = sqrt(limit);
+        double randomLngDiff = limit * -1 + (limit * 2) * r.nextDouble();
+        push_lat = ori_lat + randomLatDiff;
+        push_lng = ori_lng + randomLngDiff;
+        return;
     }
 
     public class CustomClusterRenderer extends DefaultClusterRenderer<MyItem> {

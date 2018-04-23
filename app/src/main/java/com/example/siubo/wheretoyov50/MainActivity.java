@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     protected String file_key;
     protected int start;
     private PrefManager prefManager;
-    protected int s1, s2, s3, s4, s5, s6, s7, s8, s9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,13 +140,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (is_private == 1){
-                        Random r = new Random();
-                        double randomLatDiff = -0.00049 + (0.00049 + 0.00049) * r.nextDouble();
-                        double limit = (1 - randomLatDiff * randomLatDiff / 0.0000002401) * 0.0000002025;
-                        limit = sqrt(limit);
-                        double randomLngDiff = limit * -1 + (limit * 2) * r.nextDouble();
-                        push_lat = ori_lat + randomLatDiff;
-                        push_lng = ori_lng + randomLngDiff;
+                        addNoise();
                     }
                     else{
                         push_lat = ori_lat;
@@ -455,7 +448,6 @@ public class MainActivity extends AppCompatActivity {
         return location1.distanceTo(location2);
     }
 
-
     public void onImageButtonClick(View view){
         switch(view.getId()){
             case R.id.imageButton1:
@@ -534,6 +526,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MAIN", "attri: " + Integer.toString(attri));
     }
 
-
-
+    public void addNoise(){
+        Random r = new Random();
+        double randomLatDiff = -0.001945 + 0.001945 * 2 * r.nextDouble();
+        double limit = (1 - randomLatDiff * randomLatDiff / 0.001945 / 0.001945) * 0.0018 * 0.0018;
+        limit = sqrt(limit);
+        double randomLngDiff = limit * -1 + (limit * 2) * r.nextDouble();
+        push_lat = ori_lat + randomLatDiff;
+        push_lng = ori_lng + randomLngDiff;
+        return;
+    }
 }

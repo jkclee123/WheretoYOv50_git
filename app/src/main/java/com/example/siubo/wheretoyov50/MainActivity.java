@@ -385,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
         String key = ref.push().getKey();
         DatabaseItem additem = new DatabaseItem(1, 22.27319, 114.12867,
                 Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
-                Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)), is_private);
+                Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)), is_private);
         ref.child(key).setValue(additem);
 
         Log.d("MAIN", "Added Item to Database.");
@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MAIN", "Lat: " + Double.toString(ori_lat));
         Log.d("MAIN", "Lng: " + Double.toString(ori_lng));
         Log.d("MAIN", "Stayed: " + Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60));
-        Log.d("MAIN", "Lastseen: " + Integer.toString(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)));
+        Log.d("MAIN", "Lastseen: " + Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)));
 
         try {
             FileInputStream fin = openFileInput(NOTI_FILENAME);

@@ -17,7 +17,7 @@ public class DatabaseItem {
         this.lat = lat;
         this.lng = lng;
         this.hour = hour;
-                this.lastseen = lastseen;
-                this.is_private = is_private;
-                }
-                }
+        this.lastseen = lastseen;
+        this.is_private = is_private;
+    }
+}

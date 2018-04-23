@@ -84,7 +84,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 long getattri;
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     getattri = (long) ds.child("attri").getValue();
-                    if ((getattri & attri) != attri)
+                    if ((getattri | attri) != attri)
                         continue;
                     if (is_private == 1) {
                         Random r = new Random();

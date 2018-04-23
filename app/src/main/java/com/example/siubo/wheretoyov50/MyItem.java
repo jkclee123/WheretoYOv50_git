@@ -11,39 +11,13 @@ public class MyItem implements ClusterItem {
     private LatLng mPosition;
     private String mTitle;
     private String mSnippet;
-    private String mComment;
     private long is_private;
-
-    public MyItem(LatLng latlng) {
-        mPosition = latlng;
-        mTitle = "";
-        mSnippet = "";
-    }
-
-    public MyItem(double lat, double lng) {
-        mPosition = new LatLng(lat, lng);
-        mTitle = "";
-        mSnippet = "";
-    }
 
     public MyItem(double lat, double lng, String hour, String lastseen, long is_private) {
         mPosition = new LatLng(lat, lng);
         mTitle = hour;
         mSnippet = lastseen;
         this.is_private = is_private;
-    }
-
-    public MyItem(double lat, double lng, String hour, String lastseen, String comment) {
-        mPosition = new LatLng(lat, lng);
-        mTitle = hour;
-        mSnippet = lastseen;
-        mComment = comment;
-    }
-
-    public MyItem(LatLng latlng, String title, String snippet) {
-        mPosition = latlng;
-        mTitle = title;
-        mSnippet = snippet;
     }
 
     @Override

@@ -115,10 +115,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     stayed_title = "Stayed " + stayed_time[0] + "hr " + stayed_time[1] + "min";
                     marker = new MyItem(push_lat, push_lng, stayed_title, diff_snippet, (long) ds.child("is_private").getValue());
                     mClusterManager.addItem(marker);
-                    if (is_private == 1) {
+                    /*if (is_private == 1) {
                         marker = new MyItem((double) ds.child("lat").getValue(), (double) ds.child("lng").getValue(), stayed_title, diff_snippet, 0);
                         mClusterManager.addItem(marker);
-                    }
+                    }*/
                 }
                 getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(22.3964, 114.1095), 10));
             }

@@ -11,15 +11,22 @@ import android.os.Handler;
 import android.os.Process;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -73,18 +80,29 @@ public class MainActivity extends AppCompatActivity {
     protected Context mContext;
     protected String file_key;
     protected int start;
+    protected View mview;
     private PrefManager prefManager;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         prefManager = new PrefManager(this);
+        /*
         if (!prefManager.isFirstTimeLaunch()) {
             Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(homeIntent);
         }
+        */
+
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
         Log.d("MAIN", "Main onCreate.");
         my_attri = 0;
         home_lat = 0.0;
@@ -93,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
         first_stayed = 1500;
         start = 0;
         mContext = this;
-
+        mview = findViewById(R.id.imageButton1);
         ref = FirebaseDatabase.getInstance().getReference(getString(R.string.database));
+
         mLocationCallback = new LocationCallback(){
             @Override
             public void onLocationAvailability(LocationAvailability locationAvailability){
@@ -122,10 +141,12 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
+                    /*
                     if (dist(ori_lat, ori_lng, location.getLatitude(), location.getLongitude()) < 200){
                         Log.d("MAIN", "Still Within 200 Meters Range.");
                         return;
                     }
+                    */
 
                     stayed = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 + Calendar.getInstance().get(Calendar.MINUTE) - first_stayed;
                     if (stayed < 0)
@@ -139,20 +160,12 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    if (is_private == 1){
-                        addNoise();
-                    }
-                    else{
-                        push_lat = ori_lat;
-                        push_lng = ori_lng;
-                    }
-
+                    addNoise();
                     String key = ref.push().getKey();
                     DatabaseItem additem = new DatabaseItem(my_attri, push_lat, push_lng,
                             Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
                             Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)), is_private);
                     ref.child(key).setValue(additem);
-
                     Log.d("MAIN", "Added Item to Database.");
                     Log.d("MAIN", "Key: " + key);
                     Log.d("MAIN", "my_attri: " + Integer.toString(my_attri));
@@ -212,9 +225,30 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(false);
+                        switch(menuItem.getItemId()){
+                            case R.id.settings:
+                                onSettingsButtonClicked(mview);
+                                break;
+                            case R.id.web:
+                                WebClick(mview);
+                                finish();
+                                break;
+                            case R.id.help:
+                                TutorClick(mview);
+                                finish();
+                                break;
+                        }
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
     }
 
     @Override
@@ -282,21 +316,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void createLocationRequest(){
-        /*
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(100);
-        mLocationRequest.setFastestInterval(100);
-        mLocationRequest.setSmallestDisplacement(0);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
-        */
-        ///*
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1200000);
         mLocationRequest.setFastestInterval(1200000);
-        mLocationRequest.setSmallestDisplacement(0);
+        mLocationRequest.setSmallestDisplacement(200);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
-        //*/
-
     }
 
     public void getSettings(){
@@ -365,13 +389,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void TutorClick(View view) {
-        Intent tutorIntent = new Intent(this, Tutorial.class);
-        startActivity(tutorIntent);
+        Intent intent = new Intent(this, Tutorial.class);
+        intent.putExtra("MY_ATTRI", my_attri);
+        intent.putExtra("IS_PRIVATE", is_private);
+        intent.putExtra("HOME_LAT", home_lat);
+        intent.putExtra("HOME_LNG", home_lng);
+        startActivity(intent);
     }
 
     public void WebClick(View view){
-        Intent webIntent = new Intent(this, web.class);
-        startActivity(webIntent);
+        Intent intent = new Intent(this, web.class);
+        intent.putExtra("MY_ATTRI", my_attri);
+        intent.putExtra("IS_PRIVATE", is_private);
+        intent.putExtra("HOME_LAT", home_lat);
+        intent.putExtra("HOME_LNG", home_lng);
+        startActivity(intent);
     }
 
     public void onNotiButtonClicked(View view){
@@ -537,5 +569,15 @@ public class MainActivity extends AppCompatActivity {
         push_lat = ori_lat + randomLatDiff;
         push_lng = ori_lng + randomLngDiff;
         return;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

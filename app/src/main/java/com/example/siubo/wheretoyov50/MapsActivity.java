@@ -120,9 +120,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void addNoise(double ori_lat, double ori_lng) {
+        double latbound = 0.00049 * is_private;
+        double lngbound = 0.00045 * is_private;
         Random r = new Random();
-        double randomLatDiff = -0.001945 + 0.001945 * 2 * r.nextDouble();
-        double limit = (1 - randomLatDiff * randomLatDiff / 0.001945 / 0.001945) * 0.0018 * 0.0018;
+        double randomLatDiff = -1 * latbound + latbound * 2 * r.nextDouble();
+        double limit = (1 - randomLatDiff * randomLatDiff / latbound / latbound) * lngbound * lngbound;
         limit = sqrt(limit);
         double randomLngDiff = limit * -1 + (limit * 2) * r.nextDouble();
         push_lat = ori_lat + randomLatDiff;
@@ -139,20 +141,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         @Override protected void onBeforeClusterItemRendered(MyItem item, MarkerOptions markerOptions) {
+            Random r = new Random();
+            int level = r.nextInt(5);
+
             final BitmapDescriptor markerDescriptor;
-            Log.d("MAIN", "is_private: " + Integer.toString(is_private) + "\nitem.getIs_private: " + Long.toString(item.getIs_private()));
-            if (is_private == 1){
-                if (item.getIs_private() == 1)
-                     markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW);
-                else
-                    markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
-            }
-            else{
-                if (item.getIs_private() == 1)
-                    markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
-                else
-                    markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
-            }
+//            int level = is_private + (int) item.getIs_private();
+            float color = 120 - level * 30;
+            Log.d("MAIN", Float.toString(color));
+            markerDescriptor = BitmapDescriptorFactory.defaultMarker(color);
             markerOptions.icon(markerDescriptor);
         }
     }

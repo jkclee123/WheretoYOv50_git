@@ -527,9 +527,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addNoise(){
+        double latbound = 0.00049 * is_private;
+        double lngbound = 0.00045 * is_private;
         Random r = new Random();
-        double randomLatDiff = -0.001945 + 0.001945 * 2 * r.nextDouble();
-        double limit = (1 - randomLatDiff * randomLatDiff / 0.001945 / 0.001945) * 0.0018 * 0.0018;
+        double randomLatDiff = -1 * latbound + latbound * 2 * r.nextDouble();
+        double limit = (1 - randomLatDiff * randomLatDiff / latbound / latbound) * lngbound * lngbound;
         limit = sqrt(limit);
         double randomLngDiff = limit * -1 + (limit * 2) * r.nextDouble();
         push_lat = ori_lat + randomLatDiff;

@@ -149,66 +149,32 @@
             app:srcCompat="@drawable/watersports" />
 
         <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            android:onClick="onSettingsButtonClicked"
-            android:text="Settings"
-            android:background="@drawable/my_button_bg"
-            app:layout_constraintEnd_toStartOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton7" />
-
-        <Button
             android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_width="260dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:background="@drawable/my_button_bg"
             android:onClick="onButtonClicked"
             android:text="Go To Map"
-            android:background="@drawable/my_button_bg"
+            app:layout_constraintBottom_toTopOf="@id/button6"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton8" />
-
-        <Button
-            android:id="@+id/button11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:onClick="WebClick"
-            android:text="Web"
-            android:background="@drawable/my_button_bg"
-            app:layout_constraintStart_toEndOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton9" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button6"
-            android:layout_width="146dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="260dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:background="@drawable/my_button_bg"
             android:onClick="onNotiButtonClicked"
             android:text="NOTIFICATION"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="149dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/my_button_bg"
-            android:onClick="TutorClick"
-            android:text="Help"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </android.support.constraint.ConstraintLayout>

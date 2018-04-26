@@ -35,7 +35,7 @@ public class web extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        actionbar.setHomeAsUpIndicator(R.drawable.menuicon);
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         Intent intent = getIntent();

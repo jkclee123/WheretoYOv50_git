@@ -3,22 +3,35 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/home"
-            android:icon="@drawable/hiking"
+            android:icon="@drawable/homeicon"
             android:title="Home" />
 
         <item
             android:id="@+id/web"
-            android:icon="@drawable/hiking"
-            android:title="Web" />
+            android:icon="@drawable/searchicon"
+            android:title="Search" />
 
         <item
             android:id="@+id/settings"
-            android:icon="@drawable/band"
+            android:icon="@drawable/settingsicon"
             android:title="Settings" />
 
         <item
             android:id="@+id/help"
-            android:icon="@drawable/hiking"
+            android:icon="@drawable/helpicon"
             android:title="Help" />
+
+
     </group>
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/nav_about_us"
+                android:title="About Us" />
+            <item
+                android:id="@+id/nav_privacy_policy"
+                android:title="Privacy policy" />
+        </menu>
+    </item>
 </menu>

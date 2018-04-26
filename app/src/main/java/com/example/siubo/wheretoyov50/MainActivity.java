@@ -312,7 +312,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     protected void createLocationRequest(){
@@ -381,28 +380,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSettingsButtonClicked(View view){
         Intent intent = new Intent(this, com.example.siubo.wheretoyov50.Settings.class);
-        intent.putExtra("MY_ATTRI", my_attri);
-        intent.putExtra("IS_PRIVATE", is_private);
-        intent.putExtra("HOME_LAT", home_lat);
-        intent.putExtra("HOME_LNG", home_lng);
         startActivity(intent);
     }
 
     public void TutorClick(View view) {
         Intent intent = new Intent(this, Tutorial.class);
-        intent.putExtra("MY_ATTRI", my_attri);
-        intent.putExtra("IS_PRIVATE", is_private);
-        intent.putExtra("HOME_LAT", home_lat);
-        intent.putExtra("HOME_LNG", home_lng);
         startActivity(intent);
     }
 
     public void WebClick(View view){
         Intent intent = new Intent(this, web.class);
-        intent.putExtra("MY_ATTRI", my_attri);
-        intent.putExtra("IS_PRIVATE", is_private);
-        intent.putExtra("HOME_LAT", home_lat);
-        intent.putExtra("HOME_LNG", home_lng);
         startActivity(intent);
     }
 

@@ -21,9 +21,12 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Settings extends AppCompatActivity {
     protected int PLACE_PICKER_REQUEST = 1;
@@ -40,10 +43,37 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         Intent intent = getIntent();
         Log.d("MAIN", "Settings onCreate");
-        my_attri = intent.getExtras().getInt("MY_ATTRI");
-        home_lat = intent.getExtras().getDouble("HOME_LAT");
-        home_lng = intent.getExtras().getDouble("HOME_LNG");
-        is_private = intent.getExtras().getInt("IS_PRIVATE");
+
+        String line;
+        try{
+            FileInputStream fin = openFileInput(HOME_FILENAME);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
+            for (int i = 0; (line = bufferedReader.readLine()) != null; i++){
+                if (i == 1)
+                    home_lng = Double.parseDouble(line);
+                else
+                    home_lat = Double.parseDouble(line);
+            }
+            fin.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            FileInputStream fin = openFileInput(FILENAME);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
+            for (int i = 0; (line = bufferedReader.readLine()) != null; i++){
+                if (i == 0)
+                    my_attri = Integer.parseInt(line);
+                if (i == 1)
+                    is_private = Integer.parseInt(line);
+            }
+            fin.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if ((my_attri & 1) == 1)
             ((CheckBox) findViewById(R.id.mycheckBox0)).setChecked(true);
         if ((my_attri & 2) == 2)

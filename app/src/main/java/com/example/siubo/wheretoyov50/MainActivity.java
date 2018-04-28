@@ -344,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
+                Log.d("MAIN", "fail");
             }
         });
         Log.d("MAIN", "Exit Settings.");
@@ -359,9 +360,10 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case 10:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     return;
-                }
+                else
+                    finish();
         }
     }
 
@@ -395,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onNotiButtonClicked(View view){
         String key = ref.push().getKey();
-        DatabaseItem additem = new DatabaseItem(1, 22.27319, 114.12867,
+        DatabaseItem additem = new DatabaseItem(my_attri, 22.27319, 114.12867,
                 Integer.toString(stayed / 60) + ":" + Integer.toString(stayed % 60),
                 Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)), is_private);
         ref.child(key).setValue(additem);

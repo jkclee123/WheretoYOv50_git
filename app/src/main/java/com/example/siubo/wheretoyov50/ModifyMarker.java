@@ -48,13 +48,6 @@ public class ModifyMarker extends AppCompatActivity{
         ref = FirebaseDatabase.getInstance().getReference(getString(R.string.database));
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                finish();
-            }
-        });
         try {
             FileInputStream fin = openFileInput(NOTI_FILENAME);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fin));
@@ -83,40 +76,31 @@ public class ModifyMarker extends AppCompatActivity{
         boolean checked = ((CheckBox) view).isChecked();
         switch (view.getId()) {
             case R.id.mycheckBox0:
-                if (checked) my_attri += 1;
-                else my_attri -= 1;
+                my_attri ^= 1;
                 break;
             case R.id.mycheckBox1:
-                if (checked) my_attri += 2;
-                else my_attri -= 2;
+                my_attri ^= 2;
                 break;
             case R.id.mycheckBox2:
-                if (checked) my_attri += 4;
-                else my_attri -= 4;
+                my_attri ^= 4;
                 break;
             case R.id.mycheckBox3:
-                if (checked) my_attri += 8;
-                else my_attri -= 8;
+                my_attri ^= 8;
                 break;
             case R.id.mycheckBox4:
-                if (checked) my_attri += 16;
-                else my_attri -= 16;
+                my_attri ^= 16;
                 break;
             case R.id.mycheckBox5:
-                if (checked) my_attri += 32;
-                else my_attri -= 32;
+                my_attri ^= 32;
                 break;
             case R.id.mycheckBox6:
-                if (checked) my_attri += 64;
-                else my_attri -= 64;
+                my_attri ^= 64;
                 break;
             case R.id.mycheckBox7:
-                if (checked) my_attri += 128;
-                else my_attri -= 128;
+                my_attri ^= 128;
                 break;
             case R.id.mycheckBox8:
-                if (checked) my_attri += 256;
-                else my_attri -= 256;
+                my_attri ^= 256;
                 break;
         }
         Log.d("MAIN", Integer.toString(my_attri));
@@ -128,11 +112,6 @@ public class ModifyMarker extends AppCompatActivity{
             return;
         }
         ref.child(key).child("attri").setValue(my_attri);
-        EditText editText = findViewById(R.id.editText);
-        if (editText.getText().toString() != ""){
-            gethour += ":" + editText.getText().toString();
-            ref.child(key).child("hour").setValue(gethour);
-        }
         FileOutputStream fos;
         String newline = "\n";
         try {

@@ -23,6 +23,7 @@ public class web extends AppCompatActivity {
     ProgressBar bar;
     private DrawerLayout mDrawerLayout;
     protected Context mContext;
+    protected int page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,9 @@ public class web extends AppCompatActivity {
         findViewById(R.id.button8).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (page == 1)
+                    return;
+                page = 1;
                 String url = "http://www.weekendhk.com";
                 load(url);
             }
@@ -62,6 +66,9 @@ public class web extends AppCompatActivity {
         findViewById(R.id.button9).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (page == 2)
+                    return;
+                page = 2;
                 String url = "http://etw.nextdigital.com.hk";
                 load(url);
             }
@@ -70,6 +77,9 @@ public class web extends AppCompatActivity {
         findViewById(R.id.button10).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (page == 3)
+                    return;
+                page = 3;
                 String url = "http://www.ulifestyle.com.hk";
                 load(url);
             }

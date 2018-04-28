@@ -44,6 +44,7 @@ public class Tutorial extends AppCompatActivity {
                                 break;
                             case R.id.web:
                                 Intent intent1 = new Intent(mContext, com.example.siubo.wheretoyov50.web.class);
+                                startActivity(intent1);
                                 finish();
                                 break;
                             case R.id.home:

@@ -17,9 +17,6 @@ import android.widget.ProgressBar;
 
 public class Tutorial extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    protected int my_attri, is_private;
-    protected double home_lat;
-    protected double home_lng;
     protected Context mContext;
 
     @Override
@@ -32,12 +29,6 @@ public class Tutorial extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.menuicon);
         mDrawerLayout = findViewById(R.id.drawer_layout);
-
-        Intent intent = getIntent();
-        my_attri = intent.getExtras().getInt("MY_ATTRI");
-        home_lat = intent.getExtras().getDouble("HOME_LAT");
-        home_lng = intent.getExtras().getDouble("HOME_LNG");
-        is_private = intent.getExtras().getInt("IS_PRIVATE");
         mContext = this;
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -49,18 +40,11 @@ public class Tutorial extends AppCompatActivity {
                         switch(menuItem.getItemId()){
                             case R.id.settings:
                                 Intent intent = new Intent(mContext, com.example.siubo.wheretoyov50.Settings.class);
-                                intent.putExtra("MY_ATTRI", my_attri);
-                                intent.putExtra("IS_PRIVATE", is_private);
-                                intent.putExtra("HOME_LAT", home_lat);
-                                intent.putExtra("HOME_LNG", home_lng);
                                 startActivity(intent);
                                 break;
                             case R.id.web:
                                 Intent intent1 = new Intent(mContext, com.example.siubo.wheretoyov50.web.class);
-                                intent1.putExtra("MY_ATTRI", my_attri);
-                                intent1.putExtra("IS_PRIVATE", is_private);
-                                intent1.putExtra("HOME_LAT", home_lat);
-                                intent1.putExtra("HOME_LNG", home_lng);
+                                startActivity(intent1);
                                 finish();
                                 break;
                             case R.id.home:

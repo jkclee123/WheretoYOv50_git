@@ -141,12 +141,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         @Override protected void onBeforeClusterItemRendered(MyItem item, MarkerOptions markerOptions) {
-//            Random r = new Random();
+            Random r = new Random();
 //            int level = r.nextInt(5);
             final BitmapDescriptor markerDescriptor;
             int level = is_private + (int) item.getIs_private();
+//            Log.d("MAIN", Integer.toString(level));
             float color = 120 - level * 30;
-//            Log.d("MAIN", Float.toString(color));
             markerDescriptor = BitmapDescriptorFactory.defaultMarker(color);
             markerOptions.icon(markerDescriptor);
         }

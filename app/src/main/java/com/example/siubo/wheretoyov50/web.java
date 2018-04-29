@@ -22,10 +22,8 @@ public class web extends AppCompatActivity {
     private WebView webView;
     ProgressBar bar;
     private DrawerLayout mDrawerLayout;
-    protected int my_attri, is_private;
-    protected double home_lat;
-    protected double home_lng;
     protected Context mContext;
+    protected int page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +35,6 @@ public class web extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.menuicon);
         mDrawerLayout = findViewById(R.id.drawer_layout);
-
-        Intent intent = getIntent();
-        my_attri = intent.getExtras().getInt("MY_ATTRI");
-        home_lat = intent.getExtras().getDouble("HOME_LAT");
-        home_lng = intent.getExtras().getDouble("HOME_LNG");
-        is_private = intent.getExtras().getInt("IS_PRIVATE");
         mContext = this;
 
         bar= (ProgressBar)findViewById(R.id.progressBar2);
@@ -63,6 +55,9 @@ public class web extends AppCompatActivity {
         findViewById(R.id.button8).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (page == 1)
+                    return;
+                page = 1;
                 String url = "http://www.weekendhk.com";
                 load(url);
             }
@@ -71,6 +66,9 @@ public class web extends AppCompatActivity {
         findViewById(R.id.button9).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (page == 2)
+                    return;
+                page = 2;
                 String url = "http://etw.nextdigital.com.hk";
                 load(url);
             }
@@ -79,6 +77,9 @@ public class web extends AppCompatActivity {
         findViewById(R.id.button10).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (page == 3)
+                    return;
+                page = 3;
                 String url = "http://www.ulifestyle.com.hk";
                 load(url);
             }
@@ -94,18 +95,10 @@ public class web extends AppCompatActivity {
                         switch(menuItem.getItemId()){
                             case R.id.settings:
                                 Intent intent = new Intent(mContext, com.example.siubo.wheretoyov50.Settings.class);
-                                intent.putExtra("MY_ATTRI", my_attri);
-                                intent.putExtra("IS_PRIVATE", is_private);
-                                intent.putExtra("HOME_LAT", home_lat);
-                                intent.putExtra("HOME_LNG", home_lng);
                                 startActivity(intent);
                                 break;
                             case R.id.help:
                                 Intent intent1 = new Intent(mContext, com.example.siubo.wheretoyov50.Tutorial.class);
-                                intent1.putExtra("MY_ATTRI", my_attri);
-                                intent1.putExtra("IS_PRIVATE", is_private);
-                                intent1.putExtra("HOME_LAT", home_lat);
-                                intent1.putExtra("HOME_LNG", home_lng);
                                 startActivity(intent1);
                                 finish();
                                 break;

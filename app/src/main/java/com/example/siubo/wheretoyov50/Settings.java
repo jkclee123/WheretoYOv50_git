@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.SeekBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -67,6 +68,25 @@ public class Settings extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                is_private = i;
+                Log.d("MAIN", "is_private=" + Integer.toString(is_private));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     public void onMyAttriCheckboxClicked(View view){
@@ -158,11 +178,11 @@ public class Settings extends AppCompatActivity {
 
     public void onSwitchClicked(View view){
         boolean checked = ((Switch)view).isChecked();
-        if (checked)
+        /*if (checked)
             is_private = 1;
         else
             is_private = 0;
-        Log.d("MAIN", "is_private=" + Integer.toString(is_private));
+        Log.d("MAIN", "is_private=" + Integer.toString(is_private));*/
     }
 }
 

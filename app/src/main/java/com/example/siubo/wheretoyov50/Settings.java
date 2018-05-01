@@ -93,8 +93,6 @@ public class Settings extends AppCompatActivity {
             ((CheckBox) findViewById(R.id.mycheckBox7)).setChecked(true);
         if ((my_attri & 256) == 256)
             ((CheckBox) findViewById(R.id.mycheckBox8)).setChecked(true);
-        if (is_private == 1)
-            ((Switch) findViewById(R.id.switch1)).setChecked(true);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -117,6 +115,7 @@ public class Settings extends AppCompatActivity {
 
             }
         });
+        seekBar.setProgress(is_private);
     }
 
     public void onMyAttriCheckboxClicked(View view){
@@ -202,17 +201,6 @@ public class Settings extends AppCompatActivity {
         Log.d("MAIN", "is_private: " + Integer.toString(is_private));
         Toast.makeText(this, "We will not disclose your personal information.", Toast.LENGTH_SHORT).show();
         finish();
-    }
-
-
-
-    public void onSwitchClicked(View view){
-        boolean checked = ((Switch)view).isChecked();
-        /*if (checked)
-            is_private = 1;
-        else
-            is_private = 0;
-        Log.d("MAIN", "is_private=" + Integer.toString(is_private));*/
     }
 }
 

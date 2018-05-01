@@ -26,9 +26,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
@@ -66,7 +69,7 @@ import java.util.TimeZone;
 
 import static java.lang.Math.sqrt;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     protected static int my_attri, attri, is_private;
     protected String FILENAME = "user_info";
     protected String HOME_FILENAME = "home_info";
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     protected LocationCallback mLocationCallback;
     protected DatabaseReference ref;
     protected double home_lat, home_lng, ori_lat, ori_lng, push_lat, push_lng;
-    protected int first_stayed, stayed;
+    protected int first_stayed, stayed, search_time;
     protected Context mContext;
     protected String file_key;
     protected int start;
@@ -249,6 +252,11 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+        Spinner dropdown = findViewById(R.id.spinner);
+        String[] items = new String[]{"Past 30 Days", "Past 90 Days", "Past 180 Days"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -312,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     protected void createLocationRequest(){
@@ -372,6 +381,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MapsActivity.class);
             intent.putExtra("IS_PRIVATE", is_private);
             intent.putExtra("ATTRI", attri);
+            intent.putExtra("SEARCH_TIME", search_time);
             startActivity(intent);
         }
         else if (my_attri == 0)
@@ -568,5 +578,25 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position){
+            case 0:
+                search_time = 0;
+                break;
+            case 1:
+                search_time = 1;
+                break;
+            case 2:
+                search_time = 2;
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

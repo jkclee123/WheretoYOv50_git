@@ -31,7 +31,7 @@ import static java.lang.Math.sqrt;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     protected GoogleMap mMap;
-    protected int attri;
+    protected int attri, search_time;
     protected ClusterManager<MyItem> mClusterManager;
     protected CustomClusterRenderer renderer;
     protected DatabaseReference ref;
@@ -51,8 +51,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         Intent intent = getIntent();
         attri = intent.getExtras().getInt("ATTRI");
-        is_private = intent.getExtras().getInt("ATTRI");
         is_private = intent.getExtras().getInt("IS_PRIVATE");
+        search_time = intent.getExtras().getInt("SEARCH_TIME");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -84,7 +84,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 long getattri;
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     getattri = (long) ds.child("attri").getValue();
+                    lastseen = (String) ds.child("lastseen").getValue();
+                    int diff = Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - Integer.parseInt(lastseen);
                     if ((getattri | attri) != attri)
+                        continue;
+                    if (search_time == 0 && diff > 30)
+                        continue;
+                    if (search_time == 1 && diff > 90)
+                        continue;
+                    if (search_time == 2 && diff > 180)
                         continue;
                     if (is_private == 1) {
                         addNoise((double) ds.child("lat").getValue(), (double) ds.child("lng").getValue());
@@ -93,8 +101,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         push_lat = (double) ds.child("lat").getValue();
                         push_lng = (double) ds.child("lng").getValue();
                     }
-                    lastseen = (String) ds.child("lastseen").getValue();
-                    int diff = Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - Integer.parseInt(lastseen);
                     if (diff == 0)
                         diff_snippet = "Today";
                     else if (diff <= 1)

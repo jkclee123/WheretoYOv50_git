@@ -247,6 +247,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 TutorClick(mview);
                                 finish();
                                 break;
+                            case R.id.about:
+                                Intent intent3 = new Intent(mContext, com.example.siubo.wheretoyov50.about.class);
+                                startActivity(intent3);
+                                break;
                         }
                         mDrawerLayout.closeDrawers();
                         return true;

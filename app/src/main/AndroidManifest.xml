@@ -46,16 +46,19 @@
             android:label="@string/title_web" />
         <activity
             android:name=".t_settings"
-            android:label="Help - Settings Page"/>
+            android:label="Help - Settings Page" />
         <activity
             android:name=".t_main"
-            android:label="Help - Main Page"/>
+            android:label="Help - Main Page" />
         <activity
             android:name=".t_map"
-            android:label="Help - Map Page"/>
+            android:label="Help - Map Page" />
         <activity
             android:name=".t_web"
-            android:label="Help - Search Page"/>
+            android:label="Help - Search Page" />
+        <activity
+            android:name=".about"
+            android:label="About"></activity>
     </application>
 
 </manifest>

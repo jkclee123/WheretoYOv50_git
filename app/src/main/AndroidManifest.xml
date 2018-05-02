@@ -36,7 +36,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".DeleteMarker" />
-        <activity android:name=".ModifyMarker" />
+        <activity
+            android:name=".ModifyMarker"
+            android:label="Modify your marker"/>
         <activity android:name=".DefaultMarker" />
         <activity
             android:name=".Tutorial"

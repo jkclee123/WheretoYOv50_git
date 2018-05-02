@@ -120,6 +120,8 @@
                 app:layout_constraintTop_toBottomOf="@id/textView10"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
                 >
 
@@ -127,6 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView/>
+
                     <TextView
                         android:id="@+id/textView3"
                         android:layout_width="wrap_content"
@@ -134,27 +137,17 @@
                         android:layout_marginStart="10dp"
                         android:text="Accuracy"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView14"
+                        android:id="@+id/textView101"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Visible when \nmarkers are\nnot accurate"
+                        android:text="Random noise up to:"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="Visible when \nmarkers are\naccurate"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
                         />
                 </TableRow>
 
@@ -167,37 +160,29 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="16dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/t_markerred" />
+                        app:srcCompat="@drawable/t_markergreen" />
 
                     <TextView
                         android:id="@+id/textView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="10dp"
                         android:layout_marginRight="0dp"
-                        android:text="High"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="10dp"
-                        android:text="No"
+                        android:layout_marginTop="16dp"
+                        android:text="Very High"
                         android:textSize="16sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/textView102"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="10dp"
-                        android:text="Yes"
+                        android:layout_marginTop="16dp"
+                        android:text="0 meters"
                         android:textSize="16sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
+
 
                 </TableRow>>
 
@@ -210,37 +195,98 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="16dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/t_markerorange" />
+                        app:srcCompat="@drawable/t_markerlightgreen" />
+
                     <TextView
                         android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="16dp"
+                        android:text="High"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView106"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="16dp"
+                        android:text="50 meters"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+
+                <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/imageView11"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="16dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/t_markeryellow" />
+
+                    <TextView
+                        android:id="@+id/textView100"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Medium"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView103"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="16dp"
+                        android:text="100 meters"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/imageView12"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="16dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/t_markerorange" />
+                    <TextView
+                        android:id="@+id/textView109"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginRight="0dp"
-                        android:text="Medium"
+                        android:text="Low"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
 
                     <TextView
-                        android:id="@+id/textView18"
+                        android:id="@+id/textView104"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="10dp"
-                        android:text="Yes"
+                        android:layout_marginTop="16dp"
+                        android:text="150 meters"
                         android:textSize="16sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="10dp"
-                        android:text="Yes"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
 
                 </TableRow>
 
@@ -253,39 +299,32 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="16dp"
                         android:adjustViewBounds="true"
-                        app:srcCompat="@drawable/t_markeryellow" />
+                        app:srcCompat="@drawable/t_markerred" />
+
                     <TextView
                         android:id="@+id/textView13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="10dp"
                         android:layout_marginRight="0dp"
-                        android:text="Low"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Very Low"
                         android:textSize="16sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView20"
+                        android:id="@+id/textView105"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="10dp"
-                        android:text="Yes"
+                        android:layout_marginTop="16dp"
+                        android:text="200 meters"
                         android:textSize="16sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textView21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="10dp"
-                        android:text="No"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
 
                 </TableRow>
+
             </TableLayout>
 
 

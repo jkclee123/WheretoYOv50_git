@@ -94,13 +94,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         continue;
                     if (search_time == 2 && diff > 180)
                         continue;
-                    if (is_private == 1) {
-                        addNoise((double) ds.child("lat").getValue(), (double) ds.child("lng").getValue());
-                    }
-                    else{
-                        push_lat = (double) ds.child("lat").getValue();
-                        push_lng = (double) ds.child("lng").getValue();
-                    }
+                    addNoise((double) ds.child("lat").getValue(), (double) ds.child("lng").getValue());
+
                     if (diff == 0)
                         diff_snippet = "Today";
                     else if (diff <= 1)
